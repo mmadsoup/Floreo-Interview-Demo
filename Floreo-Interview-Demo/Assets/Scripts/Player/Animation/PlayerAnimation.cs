@@ -1,4 +1,5 @@
 using UnityEngine;
+using StarterAssets.Player.Movement;
 
 namespace StarterAssets.Player.Animation
 {
@@ -32,7 +33,7 @@ namespace StarterAssets.Player.Animation
        public void PlayGroundedAnimation()
        {
             if (!_hasAnimator) return;
-            _animator.SetBool(_animIDGrounded, playerMovement.Grounded);
+            _animator.SetBool(_animIDGrounded, playerMovement.PlayerComponents.Grounded);
        }
 
        public void PlayJumpAndFallAnimation()

@@ -1,5 +1,5 @@
-using StarterAssets;
 using UnityEngine;
+using StarterAssets.Player.Movement;
 
 namespace StarterAssets.Player.Audio
 {

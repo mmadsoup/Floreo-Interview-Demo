@@ -23,7 +23,6 @@ namespace StarterAssets.Player.Camera
             private float _cinemachineTargetYaw;
             private float _cinemachineTargetPitch;
             private const float _threshold = 0.01f;
-            private PlayerMovement playerController;
 
             public void InitializeCamera()
             {
