@@ -25,6 +25,9 @@ namespace StarterAssets.Player.Audio
         void OnDisable()
         {
             if (playerMovement == null) return;
+            
+            playerMovement.OnFootStepped -= PlayFootstepAudio;
+            playerMovement.OnPlayerLanded -= PlayLandingAudio;
         }
 
         private void PlayFootstepAudio(CharacterController _controller)
