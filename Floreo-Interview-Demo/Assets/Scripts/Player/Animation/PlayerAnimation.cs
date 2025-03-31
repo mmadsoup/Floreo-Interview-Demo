@@ -12,7 +12,8 @@ namespace StarterAssets.Player.Animation
         private int _animIDFreeFall;
         private int _animIDMotionSpeed;
         private bool _hasAnimator;
-    
+        private float _animationBlend;
+        public float AnimationBlend {get; set;}
 
         void Start()
         {

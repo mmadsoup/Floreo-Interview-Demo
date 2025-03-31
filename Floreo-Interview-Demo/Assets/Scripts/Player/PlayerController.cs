@@ -83,7 +83,7 @@ namespace StarterAssets.Player
 
         // player
         private float _speed;
-        private float _animationBlend;
+        
         private float _targetRotation = 0.0f;
         private float _rotationVelocity;
         private float _verticalVelocity;
@@ -232,8 +232,8 @@ namespace StarterAssets.Player
                 _speed = targetSpeed;
             }
 
-            _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
-            if (_animationBlend < 0.01f) _animationBlend = 0f;
+            playerAnimator.AnimationBlend = Mathf.Lerp(playerAnimator.AnimationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
+            if (playerAnimator.AnimationBlend < 0.01f) playerAnimator.AnimationBlend = 0f;
 
             // normalise input direction
             Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
@@ -258,13 +258,7 @@ namespace StarterAssets.Player
             _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
                              new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
 
-            // update animator if using character
-            /*if (_hasAnimator)
-            {
-                _animator.SetFloat(_animIDSpeed, _animationBlend);
-                _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
-            }*/
-            playerAnimator.UpdateAnimator(_animationBlend, inputMagnitude);
+            playerAnimator.UpdateAnimator(playerAnimator.AnimationBlend, inputMagnitude);
         }
 
         private void JumpAndGravity()
@@ -274,12 +268,6 @@ namespace StarterAssets.Player
                 // reset the fall timeout timer
                 _fallTimeoutDelta = FallTimeout;
 
-                // update animator if using character
-                /*if (_hasAnimator)
-                {
-                    _animator.SetBool(_animIDJump, false);
-                    _animator.SetBool(_animIDFreeFall, false);
-                }*/
                 playerAnimator.PlayJumpAndFallAnimation();
 
                 // stop our velocity dropping infinitely when grounded
@@ -294,11 +282,6 @@ namespace StarterAssets.Player
                     // the square root of H * -2 * G = how much velocity needed to reach desired height
                     _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
 
-                    // update animator if using character
-                    /*if (_hasAnimator)
-                    {
-                        _animator.SetBool(_animIDJump, true);
-                    }*/
                     playerAnimator.PlayJumpAnimation();
                 }
 
@@ -320,11 +303,6 @@ namespace StarterAssets.Player
                 }
                 else
                 {
-                    // update animator if using character
-                    /*if (_hasAnimator)
-                    {
-                        _animator.SetBool(_animIDFreeFall, true);
-                    }*/
                     playerAnimator.PlayFallAnimation();
                 }
 
