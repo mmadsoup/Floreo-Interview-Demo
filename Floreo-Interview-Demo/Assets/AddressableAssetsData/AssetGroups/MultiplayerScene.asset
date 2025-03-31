@@ -16,7 +16,12 @@ MonoBehaviour:
   m_GUID: 8d46dd97a0a4f974797b3f03efdc582d
   m_SerializeEntries:
   - m_GUID: 8700d716c0660c346a9299ac489d1834
-    m_Address: Assets/Scenes/Playground_Multi.unity
+    m_Address: Assets/Scenes/Playground_Multi_Host.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 90b8517c5e1fc32438cb79af3c5d68d2
+    m_Address: Assets/Scenes/Playground_Multi_Client.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

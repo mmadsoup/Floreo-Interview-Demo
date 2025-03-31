@@ -8,7 +8,8 @@ namespace StarterAssets.AdrressableObjects
         public class AddressableInstantiator : MonoBehaviour
     {
         [SerializeField] private string _singlePlayerSceneName;
-        [SerializeField] private string _multiplayerSceneName;
+        [SerializeField] private string _multiplayerHostSceneName;
+        [SerializeField] private string _multiplayerClientSceneName;
         private MainMenuCotroller _mainMenuCotroller;
         
         void Awake()
@@ -32,21 +33,23 @@ namespace StarterAssets.AdrressableObjects
 
         private void CreateSinglePlayerController()
         {
-            LoadScene(_singlePlayerSceneName);
+            LoadSceneAdditive(_singlePlayerSceneName);
             Debug.Log("Create Single Player Controller");
         }
 
          private void CreateHostController()
         {
+            LoadSceneAdditive(_multiplayerHostSceneName);
             Debug.Log("Create Host Player Controller");
         }
 
         private void CreateClientController()
         {
+            LoadSceneAdditive(_multiplayerClientSceneName);
             Debug.Log("Create Client Player Controller");
         }
 
-        private void LoadScene(string name)
+        private void LoadSceneAdditive(string name)
         {
             if (!string.IsNullOrEmpty(name))
             {

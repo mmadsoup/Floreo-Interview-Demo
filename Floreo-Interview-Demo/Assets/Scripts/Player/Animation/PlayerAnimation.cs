@@ -3,68 +3,49 @@ using StarterAssets.Player.Movement;
 
 namespace StarterAssets.Player.Animation
 {
-    public class PlayerAnimation : MonoBehaviour
+    public class PlayerAnimation : PlayerAnimatorBaseClass
     {
-        private Animator _animator;
         private PlayerMovement playerMovement;
-        private int _animIDSpeed;
-        private int _animIDGrounded;
-        private int _animIDJump;
-        private int _animIDFreeFall;
-        private int _animIDMotionSpeed;
-        private bool _hasAnimator;
-        public float AnimationBlend {get; set;}
 
         void Start()
         {
             GetAnimatorComponent();
             playerMovement = GetComponent<PlayerMovement>();
         }
-        public void AssignAnimationIDs()
-        {
-            _animIDSpeed = Animator.StringToHash("Speed");
-            _animIDGrounded = Animator.StringToHash("Grounded");
-            _animIDJump = Animator.StringToHash("Jump");
-            _animIDFreeFall = Animator.StringToHash("FreeFall");
-            _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
-        }
+       
 
-       public void PlayGroundedAnimation()
+       public override void PlayGroundedAnimation()
        {
             if (!_hasAnimator) return;
             _animator.SetBool(_animIDGrounded, playerMovement.PlayerComponents.Grounded);
        }
 
-       public void PlayJumpAndFallAnimation()
+       public override void PlayJumpAndFallAnimation()
        {
             if (!_hasAnimator) return;
             _animator.SetBool(_animIDJump, false);
             _animator.SetBool(_animIDFreeFall, false);
        }
 
-       public void PlayJumpAnimation()
+       public override void PlayJumpAnimation()
        {
             if (!_hasAnimator) return;
             _animator.SetBool(_animIDJump, true);
        }
        
-       public void UpdateAnimator(float animBlend, float inputMagnitude)
+       public override void UpdateAnimator(float animBlend, float inputMagnitude)
        {
             if (!_hasAnimator) return;
             _animator.SetFloat(_animIDSpeed, animBlend);
             _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
        }
 
-       public void PlayFallAnimation()
+       public override void PlayFallAnimation()
        {
             if (!_hasAnimator) return;
             _animator.SetBool(_animIDFreeFall, true);
        }
-       
-       public void GetAnimatorComponent()
-       {
-            _hasAnimator = TryGetComponent(out _animator);
-       }
+   
     }
 }
 
