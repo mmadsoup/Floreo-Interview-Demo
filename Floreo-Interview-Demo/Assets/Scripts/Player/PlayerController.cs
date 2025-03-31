@@ -4,7 +4,7 @@ using StarterAssets.Player.Audio;
 using UnityEngine;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
-using StarterAssets.Utilities;
+using StarterAssets.Player.Camera;
 #endif
 
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
@@ -17,10 +17,10 @@ namespace StarterAssets.Player
 #if ENABLE_INPUT_SYSTEM 
     [RequireComponent(typeof(PlayerInput))]
     [RequireComponent(typeof(PlayerAnimation))]
+    [RequireComponent(typeof(PlayerCamera))]
 #endif
     public class PlayerController : MonoBehaviour
     {
-        private PlayerAnimation _playerAnimator;
         [Header("Player")]
         [Tooltip("Move speed of the character in m/s")]
         public float MoveSpeed = 2.0f;
@@ -64,23 +64,6 @@ namespace StarterAssets.Player
 
         [Header("Cinemachine")]
         [Tooltip("The follow target set in the Cinemachine Virtual Camera that the camera will follow")]
-        public GameObject CinemachineCameraTarget;
-
-        [Tooltip("How far in degrees can you move the camera up")]
-        public float TopClamp = 70.0f;
-
-        [Tooltip("How far in degrees can you move the camera down")]
-        public float BottomClamp = -30.0f;
-
-        [Tooltip("Additional degress to override the camera. Useful for fine tuning camera position when locked")]
-        public float CameraAngleOverride = 0.0f;
-
-        [Tooltip("For locking the camera position on all axis")]
-        public bool LockCameraPosition = false;
-
-        // cinemachine
-        private float _cinemachineTargetYaw;
-        private float _cinemachineTargetPitch;
 
         // player
         private float _speed;
@@ -102,9 +85,10 @@ namespace StarterAssets.Player
         private CharacterController _controller;
         private StarterAssetsInputs _input;
         private GameObject _mainCamera;
+        private PlayerAnimation _playerAnimator;
+        private PlayerCamera _playerCamera;
+        
 
-
-        private const float _threshold = 0.01f;
 
         public event Action<CharacterController> OnFootStepped;
         public event Action<CharacterController> OnPlayerLanded;
@@ -132,14 +116,16 @@ namespace StarterAssets.Player
 
         private void Start()
         {
-            _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
-            
+            _playerCamera = GetComponent<PlayerCamera>();
+            _playerCamera.InitializeCamera();
+
             _playerAnimator = GetComponent<PlayerAnimation>();
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
             _playerAnimator.AssignAnimationIDs();
 #if ENABLE_INPUT_SYSTEM 
             _playerInput = GetComponent<PlayerInput>();
+            
 #else       
 			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
 #endif
@@ -158,7 +144,7 @@ namespace StarterAssets.Player
 
         private void LateUpdate()
         {
-            CameraRotation();
+            _playerCamera.RotateCamera(_input.look, IsCurrentDeviceMouse);
         }
 
         
@@ -174,26 +160,6 @@ namespace StarterAssets.Player
             _playerAnimator.PlayGroundedAnimation();
         }
 
-        private void CameraRotation()
-        {
-            // if there is an input and camera position is not fixed
-            if (_input.look.sqrMagnitude >= _threshold && !LockCameraPosition)
-            {
-                //Don't multiply mouse input by Time.deltaTime;
-                float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
-
-                _cinemachineTargetYaw += _input.look.x * deltaTimeMultiplier;
-                _cinemachineTargetPitch += _input.look.y * deltaTimeMultiplier;
-            }
-
-            // clamp our rotations so our values are limited 360 degrees
-            _cinemachineTargetYaw = Utils.ClampAngle(_cinemachineTargetYaw, float.MinValue, float.MaxValue);
-            _cinemachineTargetPitch = Utils.ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
-
-            // Cinemachine will follow this target
-            CinemachineCameraTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch + CameraAngleOverride,
-                _cinemachineTargetYaw, 0.0f);
-        }
 
         private void Move()
         {
