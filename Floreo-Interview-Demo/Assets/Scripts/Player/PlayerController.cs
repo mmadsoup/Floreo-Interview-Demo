@@ -4,6 +4,7 @@ using StarterAssets.Player.Audio;
 using UnityEngine;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
+using StarterAssets.Utilities;
 #endif
 
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
@@ -19,7 +20,7 @@ namespace StarterAssets.Player
 #endif
     public class PlayerController : MonoBehaviour
     {
-        private PlayerAnimation playerAnimator;
+        private PlayerAnimation _playerAnimator;
         [Header("Player")]
         [Tooltip("Move speed of the character in m/s")]
         public float MoveSpeed = 2.0f;
@@ -102,6 +103,7 @@ namespace StarterAssets.Player
         private StarterAssetsInputs _input;
         private GameObject _mainCamera;
 
+
         private const float _threshold = 0.01f;
 
         public event Action<CharacterController> OnFootStepped;
@@ -119,7 +121,6 @@ namespace StarterAssets.Player
             }
         }
 
-
         private void Awake()
         {
             // get a reference to our main camera
@@ -133,17 +134,15 @@ namespace StarterAssets.Player
         {
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
             
-            playerAnimator = GetComponent<PlayerAnimation>();
+            _playerAnimator = GetComponent<PlayerAnimation>();
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
+            _playerAnimator.AssignAnimationIDs();
 #if ENABLE_INPUT_SYSTEM 
             _playerInput = GetComponent<PlayerInput>();
-#else
+#else       
 			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
 #endif
-
-            playerAnimator.AssignAnimationIDs();
-
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
@@ -151,8 +150,7 @@ namespace StarterAssets.Player
 
         private void Update()
         {
-            playerAnimator.GetAnimatorComponent();
-
+            _playerAnimator.GetAnimatorComponent();
             JumpAndGravity();
             GroundedCheck();
             Move();
@@ -164,7 +162,6 @@ namespace StarterAssets.Player
         }
 
         
-
         private void GroundedCheck()
         {
             // set sphere position, with offset
@@ -174,7 +171,7 @@ namespace StarterAssets.Player
                 QueryTriggerInteraction.Ignore);
 
             // update animator if using characte(r
-            playerAnimator.PlayGroundedAnimation();
+            _playerAnimator.PlayGroundedAnimation();
         }
 
         private void CameraRotation()
@@ -190,8 +187,8 @@ namespace StarterAssets.Player
             }
 
             // clamp our rotations so our values are limited 360 degrees
-            _cinemachineTargetYaw = ClampAngle(_cinemachineTargetYaw, float.MinValue, float.MaxValue);
-            _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
+            _cinemachineTargetYaw = Utils.ClampAngle(_cinemachineTargetYaw, float.MinValue, float.MaxValue);
+            _cinemachineTargetPitch = Utils.ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
 
             // Cinemachine will follow this target
             CinemachineCameraTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch + CameraAngleOverride,
@@ -232,8 +229,8 @@ namespace StarterAssets.Player
                 _speed = targetSpeed;
             }
 
-            playerAnimator.AnimationBlend = Mathf.Lerp(playerAnimator.AnimationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
-            if (playerAnimator.AnimationBlend < 0.01f) playerAnimator.AnimationBlend = 0f;
+            _playerAnimator.AnimationBlend = Mathf.Lerp(_playerAnimator.AnimationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
+            if (_playerAnimator.AnimationBlend < 0.01f) _playerAnimator.AnimationBlend = 0f;
 
             // normalise input direction
             Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
@@ -258,7 +255,7 @@ namespace StarterAssets.Player
             _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
                              new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
 
-            playerAnimator.UpdateAnimator(playerAnimator.AnimationBlend, inputMagnitude);
+            _playerAnimator.UpdateAnimator(_playerAnimator.AnimationBlend, inputMagnitude);
         }
 
         private void JumpAndGravity()
@@ -268,7 +265,7 @@ namespace StarterAssets.Player
                 // reset the fall timeout timer
                 _fallTimeoutDelta = FallTimeout;
 
-                playerAnimator.PlayJumpAndFallAnimation();
+                _playerAnimator.PlayJumpAndFallAnimation();
 
                 // stop our velocity dropping infinitely when grounded
                 if (_verticalVelocity < 0.0f)
@@ -282,7 +279,7 @@ namespace StarterAssets.Player
                     // the square root of H * -2 * G = how much velocity needed to reach desired height
                     _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
 
-                    playerAnimator.PlayJumpAnimation();
+                    _playerAnimator.PlayJumpAnimation();
                 }
 
                 // jump timeout
@@ -303,7 +300,7 @@ namespace StarterAssets.Player
                 }
                 else
                 {
-                    playerAnimator.PlayFallAnimation();
+                    _playerAnimator.PlayFallAnimation();
                 }
 
                 // if we are not grounded, do not jump
@@ -317,27 +314,7 @@ namespace StarterAssets.Player
             }
         }
 
-        private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
-        {
-            if (lfAngle < -360f) lfAngle += 360f;
-            if (lfAngle > 360f) lfAngle -= 360f;
-            return Mathf.Clamp(lfAngle, lfMin, lfMax);
-        }
-
-        private void OnDrawGizmosSelected()
-        {
-            Color transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
-            Color transparentRed = new Color(1.0f, 0.0f, 0.0f, 0.35f);
-
-            if (Grounded) Gizmos.color = transparentGreen;
-            else Gizmos.color = transparentRed;
-
-            // when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
-            Gizmos.DrawSphere(
-                new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z),
-                GroundedRadius);
-        }
-
+       
         private void OnFootstep(AnimationEvent animationEvent)
         {
             if (animationEvent.animatorClipInfo.weight > 0.5f)
