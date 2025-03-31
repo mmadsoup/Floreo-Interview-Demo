@@ -1,4 +1,5 @@
 using UnityEngine;
+using StarterAssets.Player.Movement;
 
 namespace StarterAssets.Player.Animation
 {

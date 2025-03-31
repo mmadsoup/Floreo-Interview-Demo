@@ -10,7 +10,7 @@ using StarterAssets.Player.Camera;
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
  */
 
-namespace StarterAssets.Player
+namespace StarterAssets.Player.Movement
 {
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(PlayerAudio))]

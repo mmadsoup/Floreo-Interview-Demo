@@ -1,5 +1,6 @@
 using UnityEngine;
 using StarterAssets.Utilities;
+using StarterAssets.Player.Movement;
 
 namespace StarterAssets.Player.Camera
 {
