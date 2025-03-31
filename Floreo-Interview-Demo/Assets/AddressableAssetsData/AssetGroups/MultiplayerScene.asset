@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: MultiplayerScene
+  m_EditorClassIdentifier: 
+  m_GroupName: MultiplayerScene
+  m_GUID: 8d46dd97a0a4f974797b3f03efdc582d
+  m_SerializeEntries:
+  - m_GUID: 8700d716c0660c346a9299ac489d1834
+    m_Address: Assets/Scenes/Playground_Multi.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: cc48600045bcce749b21ce8542974ffd, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: b8524714ce322184c983198a45e7d3bc, type: 2}
+    - {fileID: 11400000, guid: 0f78e44a2b6307b4f985da90aefc53a8, type: 2}

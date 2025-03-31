@@ -1,87 +1,94 @@
-using Mono.Cecil;
+using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class MainMenuCotroller : MonoBehaviour
+namespace StarterAssets.Menu
 {
-    private VisualElement _ui;
-    private Button _buttonOne;
-    private Button _buttonTwo;
-    private TextElement _titleText;
-    private TextElement _subtitleText;
-    private enum MenuState { DefaultMenu, Multiplayer}
-    private MenuState state = MenuState.DefaultMenu;
-    void Awake()
+    public class MainMenuCotroller : MonoBehaviour
     {
-        _ui = GetComponent<UIDocument>().rootVisualElement;
-        _titleText = _ui.Q<TextElement>("TitleText");
-        _subtitleText = _ui.Q<TextElement>("SubtitleText");
-    }
+        private VisualElement _ui;
+        private Button _buttonOne;
+        private Button _buttonTwo;
+        private TextElement _titleText;
+        private TextElement _subtitleText;
+        private enum MenuState { DefaultMenu, Multiplayer}
+        private MenuState state = MenuState.DefaultMenu;
 
-    void OnEnable()
-    {
-        _buttonOne = _ui.Q<Button>("ButtonOne");
-        _buttonOne.text = "Single Player";
-        _buttonOne.clicked += OnSinglePlayerClicked;
+        public event Action OnSinglePlayerButtonClicked;
+        public event Action OnHostButtonClicked;
+        public event Action OnJoinButtonClicked;
+        void Awake()
+        {
+            _ui = GetComponent<UIDocument>().rootVisualElement;
+            _titleText = _ui.Q<TextElement>("TitleText");
+            _subtitleText = _ui.Q<TextElement>("SubtitleText");
+        }
 
-        _buttonTwo = _ui.Q<Button>("ButtonTwo");
-        _buttonTwo.text = "Multiplayer";
-        _buttonTwo.clicked += OnMultiplayerClicked;
-    }
+        void OnEnable()
+        {
+            _buttonOne = _ui.Q<Button>("ButtonOne");
+            _buttonOne.text = "Single Player";
+            _buttonOne.clicked += OnSinglePlayerClicked;
 
-    void OnDisable()
-    {
-        _buttonOne.clicked -= OnSinglePlayerClicked;
-        _buttonTwo.clicked -= OnMultiplayerClicked;
-    }
+            _buttonTwo = _ui.Q<Button>("ButtonTwo");
+            _buttonTwo.text = "Multiplayer";
+            _buttonTwo.clicked += OnMultiplayerClicked;
+        }
 
-    private void OnSinglePlayerClicked()
-    {
+        void OnDisable()
+        {
+            _buttonOne.clicked -= OnSinglePlayerClicked;
+            _buttonTwo.clicked -= OnMultiplayerClicked;
+        }
+
+        private void OnSinglePlayerClicked()
+        {
+            
+            ButtonOneStateHandler();
+        }
         
-        ButtonOneStateHandler();
-    }
-    
-    private void OnMultiplayerClicked()
-    {
-       ButtonTwoStateHandler();
-    }
+        private void OnMultiplayerClicked()
+        {
+        ButtonTwoStateHandler();
+        }
 
-    private void ButtonOneStateHandler()
-    {
-        switch (state)
-        { 
-            case MenuState.DefaultMenu:
-                Debug.Log("Single Player");
-                UnloadMenu();
-                
-            break;
-            case MenuState.Multiplayer:
-                Debug.Log("Create Host controller");
-                UnloadMenu();
-            break;
+        private void ButtonOneStateHandler()
+        {
+            switch (state)
+            { 
+                case MenuState.DefaultMenu:
+                    OnSinglePlayerButtonClicked?.Invoke();
+                    UnloadMenu();
+                break;
+                case MenuState.Multiplayer:
+                    OnHostButtonClicked?.Invoke();
+                    UnloadMenu();
+                break;
+            }
+        }
+
+        private void ButtonTwoStateHandler()
+        {
+            switch (state)
+            { 
+                case MenuState.DefaultMenu:
+                    Debug.Log("Multi Player");
+                    state = MenuState.Multiplayer;
+                    _buttonTwo.text = "Join";
+                    _buttonOne.text = "Host";
+                break;
+                case MenuState.Multiplayer:
+                    OnJoinButtonClicked?.Invoke();
+                    UnloadMenu();
+                break;
+            }
+        }
+
+        private void UnloadMenu()
+        {
+            Destroy(gameObject);
+            Resources.UnloadUnusedAssets();
         }
     }
 
-    private void ButtonTwoStateHandler()
-    {
-         switch (state)
-        { 
-            case MenuState.DefaultMenu:
-                Debug.Log("Multi Player");
-                state = MenuState.Multiplayer;
-                _buttonTwo.text = "Join";
-                _buttonOne.text = "Host";
-            break;
-            case MenuState.Multiplayer:
-                Debug.Log("Create client controller controller");
-                UnloadMenu();
-            break;
-        }
-    }
-
-    private void UnloadMenu()
-    {
-        Destroy(gameObject);
-        Resources.UnloadUnusedAssets();
-    }
 }
