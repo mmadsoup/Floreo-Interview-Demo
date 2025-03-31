@@ -8,23 +8,23 @@ namespace StarterAssets.Player.Audio
         public AudioClip LandingAudioClip;
         public AudioClip[] FootstepAudioClips;
         [Range(0, 1)] public float FootstepAudioVolume = 0.5f;
-        private PlayerController playerController;
+        private PlayerMovement playerMovement;
 
         void Awake()
         {
-            playerController = FindFirstObjectByType<PlayerController>();;
+            playerMovement = FindFirstObjectByType<PlayerMovement>();;
         }
         void OnEnable()
         {
-            if (playerController == null) return;
+            if (playerMovement == null) return;
 
-            playerController.OnFootStepped += PlayFootstepAudio;
-            playerController.OnPlayerLanded += PlayLandingAudio;
+            playerMovement.OnFootStepped += PlayFootstepAudio;
+            playerMovement.OnPlayerLanded += PlayLandingAudio;
         }
 
         void OnDisable()
         {
-            if (playerController == null) return;
+            if (playerMovement == null) return;
         }
 
         private void PlayFootstepAudio(CharacterController _controller)

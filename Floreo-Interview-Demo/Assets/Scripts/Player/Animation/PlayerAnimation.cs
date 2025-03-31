@@ -5,7 +5,7 @@ namespace StarterAssets.Player.Animation
     public class PlayerAnimation : MonoBehaviour
     {
         private Animator _animator;
-        private PlayerController playerController;
+        private PlayerMovement playerMovement;
         private int _animIDSpeed;
         private int _animIDGrounded;
         private int _animIDJump;
@@ -18,7 +18,7 @@ namespace StarterAssets.Player.Animation
         void Start()
         {
             GetAnimatorComponent();
-            playerController = GetComponent<PlayerController>();
+            playerMovement = GetComponent<PlayerMovement>();
         }
         public void AssignAnimationIDs()
         {
@@ -32,7 +32,7 @@ namespace StarterAssets.Player.Animation
        public void PlayGroundedAnimation()
        {
             if (!_hasAnimator) return;
-            _animator.SetBool(_animIDGrounded, playerController.Grounded);
+            _animator.SetBool(_animIDGrounded, playerMovement.Grounded);
        }
 
        public void PlayJumpAndFallAnimation()

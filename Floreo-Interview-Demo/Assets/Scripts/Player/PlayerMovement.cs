@@ -19,7 +19,7 @@ namespace StarterAssets.Player
     [RequireComponent(typeof(PlayerAnimation))]
     [RequireComponent(typeof(PlayerCamera))]
 #endif
-    public class PlayerController : MonoBehaviour
+    public class PlayerMovement : MonoBehaviour
     {
         [Header("Player")]
         [Tooltip("Move speed of the character in m/s")]
@@ -78,7 +78,6 @@ namespace StarterAssets.Player
         private float _fallTimeoutDelta;
 
 
-
 #if ENABLE_INPUT_SYSTEM 
         private PlayerInput _playerInput;
 #endif
@@ -87,8 +86,6 @@ namespace StarterAssets.Player
         private GameObject _mainCamera;
         private PlayerAnimation _playerAnimator;
         private PlayerCamera _playerCamera;
-        
-
 
         public event Action<CharacterController> OnFootStepped;
         public event Action<CharacterController> OnPlayerLanded;
