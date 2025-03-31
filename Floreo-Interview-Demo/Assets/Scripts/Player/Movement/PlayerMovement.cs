@@ -14,10 +14,10 @@ namespace StarterAssets.Player.Movement
 {
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(PlayerAudio))]
-#if ENABLE_INPUT_SYSTEM 
-    [RequireComponent(typeof(PlayerInput))]
     [RequireComponent(typeof(PlayerAnimation))]
     [RequireComponent(typeof(PlayerCamera))]
+#if ENABLE_INPUT_SYSTEM 
+    [RequireComponent(typeof(PlayerInput))]
 #endif
     public class PlayerMovement : PlayerBaseMovement
     {
@@ -221,7 +221,6 @@ namespace StarterAssets.Player.Movement
                 verticalVelocity += PlayerComponents.Gravity * Time.deltaTime;
             }
         }
-
 
         private void OnFootstep(AnimationEvent animationEvent)
         {

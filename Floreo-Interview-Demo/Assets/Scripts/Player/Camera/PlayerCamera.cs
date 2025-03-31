@@ -5,7 +5,6 @@ namespace StarterAssets.Player.Camera
 {
     public class PlayerCamera : MonoBehaviour
     {
-        
             public GameObject CinemachineCameraTarget;
 
             [Tooltip("How far in degrees can you move the camera up")]
