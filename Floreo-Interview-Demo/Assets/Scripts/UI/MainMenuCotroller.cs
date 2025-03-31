@@ -1,3 +1,4 @@
+using Mono.Cecil;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -51,9 +52,12 @@ public class MainMenuCotroller : MonoBehaviour
         { 
             case MenuState.DefaultMenu:
                 Debug.Log("Single Player");
+                UnloadMenu();
+                
             break;
             case MenuState.Multiplayer:
                 Debug.Log("Create Host controller");
+                UnloadMenu();
             break;
         }
     }
@@ -70,7 +74,14 @@ public class MainMenuCotroller : MonoBehaviour
             break;
             case MenuState.Multiplayer:
                 Debug.Log("Create client controller controller");
+                UnloadMenu();
             break;
         }
+    }
+
+    private void UnloadMenu()
+    {
+        Destroy(gameObject);
+        Resources.UnloadUnusedAssets();
     }
 }
