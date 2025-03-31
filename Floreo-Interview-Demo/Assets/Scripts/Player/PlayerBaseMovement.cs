@@ -1,16 +1,23 @@
 using UnityEngine;
 
-public class PlayerBaseMovement : MonoBehaviour
+namespace StarterAssets.Player.Movement
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public abstract class PlayerBaseMovement : MonoBehaviour
     {
+        protected float speed;
         
-    }
+        protected float targetRotation = 0.0f;
+        protected float rotationVelocity;
+        protected float verticalVelocity;
+        protected float terminalVelocity = 53.0f;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        // timeout deltatime
+        protected float jumpTimeoutDelta;
+        protected float fallTimeoutDelta;
+
+        protected abstract void Move();
+        protected abstract void GroundedCheck();
+        protected abstract void JumpAndGravity();
+
     }
 }

@@ -19,20 +19,10 @@ namespace StarterAssets.Player.Movement
     [RequireComponent(typeof(PlayerAnimation))]
     [RequireComponent(typeof(PlayerCamera))]
 #endif
-    public class PlayerMovement : MonoBehaviour
+    public class PlayerMovement : PlayerBaseMovement
     {
         public PlayerComponentsSO PlayerComponents;
         // player
-        private float _speed;
-        
-        private float _targetRotation = 0.0f;
-        private float _rotationVelocity;
-        private float _verticalVelocity;
-        private float _terminalVelocity = 53.0f;
-
-        // timeout deltatime
-        private float _jumpTimeoutDelta;
-        private float _fallTimeoutDelta;
 
 
 #if ENABLE_INPUT_SYSTEM 
@@ -84,8 +74,8 @@ namespace StarterAssets.Player.Movement
 			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
 #endif
             // reset our timeouts on start
-            _jumpTimeoutDelta = PlayerComponents.JumpTimeout;
-            _fallTimeoutDelta = PlayerComponents.FallTimeout;
+            jumpTimeoutDelta = PlayerComponents.JumpTimeout;
+            fallTimeoutDelta = PlayerComponents.FallTimeout;
         }
 
         private void Update()
@@ -102,7 +92,7 @@ namespace StarterAssets.Player.Movement
         }
 
         
-        private void GroundedCheck()
+        protected override void GroundedCheck()
         {
             // set sphere position, with offset
             Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - PlayerComponents.GroundedOffset,
@@ -115,7 +105,7 @@ namespace StarterAssets.Player.Movement
         }
 
 
-        private void Move()
+        protected override void Move()
         {
             // set target speed based on move speed, sprint speed and if sprint is pressed
             float targetSpeed = _input.sprint ? PlayerComponents.SprintSpeed : PlayerComponents.MoveSpeed;
@@ -138,15 +128,15 @@ namespace StarterAssets.Player.Movement
             {
                 // creates curved result rather than a linear one giving a more organic speed change
                 // note T in Lerp is clamped, so we don't need to clamp our speed
-                _speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude,
+                speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude,
                     Time.deltaTime * PlayerComponents.SpeedChangeRate);
 
                 // round speed to 3 decimal places
-                _speed = Mathf.Round(_speed * 1000f) / 1000f;
+                speed = Mathf.Round(speed * 1000f) / 1000f;
             }
             else
             {
-                _speed = targetSpeed;
+                speed = targetSpeed;
             }
 
             _playerAnimator.AnimationBlend = Mathf.Lerp(_playerAnimator.AnimationBlend, targetSpeed, Time.deltaTime * PlayerComponents.SpeedChangeRate);
@@ -159,9 +149,9 @@ namespace StarterAssets.Player.Movement
             // if there is a move input rotate player when the player is moving
             if (_input.move != Vector2.zero)
             {
-                _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
+                targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
                                   _mainCamera.transform.eulerAngles.y;
-                float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity,
+                float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref rotationVelocity,
                     PlayerComponents.RotationSmoothTime);
 
                 // rotate to face input direction relative to camera position
@@ -169,54 +159,54 @@ namespace StarterAssets.Player.Movement
             }
 
 
-            Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
+            Vector3 targetDirection = Quaternion.Euler(0.0f, targetRotation, 0.0f) * Vector3.forward;
 
             // move the player
-            _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
-                             new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+            _controller.Move(targetDirection.normalized * (speed * Time.deltaTime) +
+                             new Vector3(0.0f, verticalVelocity, 0.0f) * Time.deltaTime);
 
             _playerAnimator.UpdateAnimator(_playerAnimator.AnimationBlend, inputMagnitude);
         }
 
-        private void JumpAndGravity()
+        protected override void JumpAndGravity()
         {
             if (PlayerComponents.Grounded)
             {
                 // reset the fall timeout timer
-                _fallTimeoutDelta = PlayerComponents.FallTimeout;
+                fallTimeoutDelta = PlayerComponents.FallTimeout;
 
                 _playerAnimator.PlayJumpAndFallAnimation();
 
                 // stop our velocity dropping infinitely when grounded
-                if (_verticalVelocity < 0.0f)
+                if (verticalVelocity < 0.0f)
                 {
-                    _verticalVelocity = -2f;
+                    verticalVelocity = -2f;
                 }
 
                 // Jump
-                if (_input.jump && _jumpTimeoutDelta <= 0.0f)
+                if (_input.jump && jumpTimeoutDelta <= 0.0f)
                 {
                     // the square root of H * -2 * G = how much velocity needed to reach desired height
-                    _verticalVelocity = Mathf.Sqrt(PlayerComponents.JumpHeight * -2f * PlayerComponents.Gravity);
+                    verticalVelocity = Mathf.Sqrt(PlayerComponents.JumpHeight * -2f * PlayerComponents.Gravity);
 
                     _playerAnimator.PlayJumpAnimation();
                 }
 
                 // jump timeout
-                if (_jumpTimeoutDelta >= 0.0f)
+                if (jumpTimeoutDelta >= 0.0f)
                 {
-                    _jumpTimeoutDelta -= Time.deltaTime;
+                    jumpTimeoutDelta -= Time.deltaTime;
                 }
             }
             else
             {
                 // reset the jump timeout timer
-                _jumpTimeoutDelta = PlayerComponents.JumpTimeout;
+                jumpTimeoutDelta = PlayerComponents.JumpTimeout;
 
                 // fall timeout
-                if (_fallTimeoutDelta >= 0.0f)
+                if (fallTimeoutDelta >= 0.0f)
                 {
-                    _fallTimeoutDelta -= Time.deltaTime;
+                    fallTimeoutDelta -= Time.deltaTime;
                 }
                 else
                 {
@@ -228,9 +218,9 @@ namespace StarterAssets.Player.Movement
             }
 
             // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
-            if (_verticalVelocity < _terminalVelocity)
+            if (verticalVelocity < terminalVelocity)
             {
-                _verticalVelocity += PlayerComponents.Gravity * Time.deltaTime;
+                verticalVelocity += PlayerComponents.Gravity * Time.deltaTime;
             }
         }
 
