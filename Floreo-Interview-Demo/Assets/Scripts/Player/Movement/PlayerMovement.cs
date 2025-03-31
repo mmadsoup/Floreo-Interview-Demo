@@ -22,8 +22,6 @@ namespace StarterAssets.Player.Movement
     public class PlayerMovement : PlayerBaseMovement
     {
         public PlayerComponentsSO PlayerComponents;
-        // player
-
 
 #if ENABLE_INPUT_SYSTEM 
         private PlayerInput _playerInput;

@@ -18,6 +18,5 @@ namespace StarterAssets.Player.Movement
         protected abstract void Move();
         protected abstract void GroundedCheck();
         protected abstract void JumpAndGravity();
-
     }
 }
