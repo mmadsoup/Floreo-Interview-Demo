@@ -1,4 +1,5 @@
 ﻿using System;
+using StarterAssets.Player.Animation;
 using StarterAssets.Player.Audio;
 using UnityEngine;
 #if ENABLE_INPUT_SYSTEM 
@@ -14,9 +15,11 @@ namespace StarterAssets.Player
     [RequireComponent(typeof(PlayerAudio))]
 #if ENABLE_INPUT_SYSTEM 
     [RequireComponent(typeof(PlayerInput))]
+    [RequireComponent(typeof(PlayerAnimation))]
 #endif
     public class PlayerController : MonoBehaviour
     {
+        private PlayerAnimation playerAnimator;
         [Header("Player")]
         [Tooltip("Move speed of the character in m/s")]
         public float MoveSpeed = 2.0f;
@@ -90,24 +93,16 @@ namespace StarterAssets.Player
         private float _jumpTimeoutDelta;
         private float _fallTimeoutDelta;
 
-        // animation IDs
-        private int _animIDSpeed;
-        private int _animIDGrounded;
-        private int _animIDJump;
-        private int _animIDFreeFall;
-        private int _animIDMotionSpeed;
+
 
 #if ENABLE_INPUT_SYSTEM 
         private PlayerInput _playerInput;
 #endif
-        private Animator _animator;
         private CharacterController _controller;
         private StarterAssetsInputs _input;
         private GameObject _mainCamera;
 
         private const float _threshold = 0.01f;
-
-        private bool _hasAnimator;
 
         public event Action<CharacterController> OnFootStepped;
         public event Action<CharacterController> OnPlayerLanded;
@@ -138,7 +133,7 @@ namespace StarterAssets.Player
         {
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
             
-            _hasAnimator = TryGetComponent(out _animator);
+            playerAnimator = GetComponent<PlayerAnimation>();
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
 #if ENABLE_INPUT_SYSTEM 
@@ -147,7 +142,7 @@ namespace StarterAssets.Player
 			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
 #endif
 
-            AssignAnimationIDs();
+            playerAnimator.AssignAnimationIDs();
 
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
@@ -156,7 +151,7 @@ namespace StarterAssets.Player
 
         private void Update()
         {
-            _hasAnimator = TryGetComponent(out _animator);
+            playerAnimator.GetAnimatorComponent();
 
             JumpAndGravity();
             GroundedCheck();
@@ -168,14 +163,7 @@ namespace StarterAssets.Player
             CameraRotation();
         }
 
-        private void AssignAnimationIDs()
-        {
-            _animIDSpeed = Animator.StringToHash("Speed");
-            _animIDGrounded = Animator.StringToHash("Grounded");
-            _animIDJump = Animator.StringToHash("Jump");
-            _animIDFreeFall = Animator.StringToHash("FreeFall");
-            _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
-        }
+        
 
         private void GroundedCheck()
         {
@@ -185,11 +173,8 @@ namespace StarterAssets.Player
             Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers,
                 QueryTriggerInteraction.Ignore);
 
-            // update animator if using character
-            if (_hasAnimator)
-            {
-                _animator.SetBool(_animIDGrounded, Grounded);
-            }
+            // update animator if using characte(r
+            playerAnimator.PlayGroundedAnimation();
         }
 
         private void CameraRotation()
@@ -274,11 +259,12 @@ namespace StarterAssets.Player
                              new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
 
             // update animator if using character
-            if (_hasAnimator)
+            /*if (_hasAnimator)
             {
                 _animator.SetFloat(_animIDSpeed, _animationBlend);
                 _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
-            }
+            }*/
+            playerAnimator.UpdateAnimator(_animationBlend, inputMagnitude);
         }
 
         private void JumpAndGravity()
@@ -289,11 +275,12 @@ namespace StarterAssets.Player
                 _fallTimeoutDelta = FallTimeout;
 
                 // update animator if using character
-                if (_hasAnimator)
+                /*if (_hasAnimator)
                 {
                     _animator.SetBool(_animIDJump, false);
                     _animator.SetBool(_animIDFreeFall, false);
-                }
+                }*/
+                playerAnimator.PlayJumpAndFallAnimation();
 
                 // stop our velocity dropping infinitely when grounded
                 if (_verticalVelocity < 0.0f)
@@ -308,10 +295,11 @@ namespace StarterAssets.Player
                     _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
 
                     // update animator if using character
-                    if (_hasAnimator)
+                    /*if (_hasAnimator)
                     {
                         _animator.SetBool(_animIDJump, true);
-                    }
+                    }*/
+                    playerAnimator.PlayJumpAnimation();
                 }
 
                 // jump timeout
@@ -333,10 +321,11 @@ namespace StarterAssets.Player
                 else
                 {
                     // update animator if using character
-                    if (_hasAnimator)
+                    /*if (_hasAnimator)
                     {
                         _animator.SetBool(_animIDFreeFall, true);
-                    }
+                    }*/
+                    playerAnimator.PlayFallAnimation();
                 }
 
                 // if we are not grounded, do not jump
