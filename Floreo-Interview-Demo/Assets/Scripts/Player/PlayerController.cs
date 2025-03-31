@@ -1,4 +1,6 @@
-﻿ using UnityEngine;
+﻿using System;
+using StarterAssets.Player.Audio;
+using UnityEngine;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
 #endif
@@ -6,14 +8,18 @@ using UnityEngine.InputSystem;
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
  */
 
-namespace StarterAssets
+namespace StarterAssets.Player
 {
     [RequireComponent(typeof(CharacterController))]
 #if ENABLE_INPUT_SYSTEM 
     [RequireComponent(typeof(PlayerInput))]
+    [RequireComponent(typeof(PlayerAudio))]
 #endif
     public class PlayerController : MonoBehaviour
     {
+        [Header("Audio Class")] 
+        private PlayerAudio playerAudio;
+
         [Header("Player")]
         [Tooltip("Move speed of the character in m/s")]
         public float MoveSpeed = 2.0f;
@@ -28,9 +34,7 @@ namespace StarterAssets
         [Tooltip("Acceleration and deceleration")]
         public float SpeedChangeRate = 10.0f;
 
-        public AudioClip LandingAudioClip;
-        public AudioClip[] FootstepAudioClips;
-        [Range(0, 1)] public float FootstepAudioVolume = 0.5f;
+        
 
         [Space(10)]
         [Tooltip("The height the player can jump")]
@@ -122,6 +126,9 @@ namespace StarterAssets
             }
         }
 
+        public event Action<CharacterController> OnFootStepped;
+        public event Action<CharacterController> OnLanded;
+
 
         private void Awake()
         {
@@ -130,6 +137,7 @@ namespace StarterAssets
             {
                 _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
             }
+            playerAudio = GetComponent<PlayerAudio>();
         }
 
         private void Start()
@@ -373,11 +381,7 @@ namespace StarterAssets
         {
             if (animationEvent.animatorClipInfo.weight > 0.5f)
             {
-                if (FootstepAudioClips.Length > 0)
-                {
-                    var index = Random.Range(0, FootstepAudioClips.Length);
-                    AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.TransformPoint(_controller.center), FootstepAudioVolume);
-                }
+                OnFootStepped?.Invoke(_controller);
             }
         }
 
@@ -385,7 +389,7 @@ namespace StarterAssets
         {
             if (animationEvent.animatorClipInfo.weight > 0.5f)
             {
-                AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
+                OnLanded?.Invoke(_controller);
             }
         }
     }
