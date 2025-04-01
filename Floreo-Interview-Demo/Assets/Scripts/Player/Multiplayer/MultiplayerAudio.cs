@@ -10,7 +10,7 @@ namespace StarterAssets.Player.Audio
 
         void Awake()
         {
-            playerMovement = FindFirstObjectByType<MultiplayerMovement>();;
+            playerMovement = GetComponent<MultiplayerMovement>();;
         }
         void OnEnable()
         {

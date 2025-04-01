@@ -14,7 +14,8 @@ namespace StarterAssets.AdrressableObjects
         
         void Awake()
         {
-            _mainMenuCotroller = FindFirstObjectByType<MainMenuCotroller>();
+            GameObject mainMenuObject = GameObject.FindGameObjectWithTag("Menu");
+            _mainMenuCotroller = mainMenuObject.GetComponent<MainMenuCotroller>();
         }
 
         void OnEnable()

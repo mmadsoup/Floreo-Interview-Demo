@@ -5,14 +5,12 @@ namespace StarterAssets.Player.Audio
 {
     public class PlayerAudio : MonoBehaviour
     {
-        public AudioClip LandingAudioClip;
-        public AudioClip[] FootstepAudioClips;
-        [Range(0, 1)] public float FootstepAudioVolume = 0.5f;
+        [SerializeField] PlayerAudioDataSO playerAudio;
         private PlayerMovement playerMovement;
 
         void Awake()
         {
-            playerMovement = FindFirstObjectByType<PlayerMovement>();;
+            playerMovement = GetComponent<PlayerMovement>();;
         }
         void OnEnable()
         {
@@ -32,16 +30,16 @@ namespace StarterAssets.Player.Audio
 
         private void PlayFootstepAudio(CharacterController _controller)
         {
-            if (FootstepAudioClips.Length > 0)
+            if (playerAudio.FootstepAudioClips.Length > 0)
             {
-                var index = Random.Range(0, FootstepAudioClips.Length);
-                AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.TransformPoint(_controller.center), FootstepAudioVolume);
+                var index = Random.Range(0, playerAudio.FootstepAudioClips.Length);
+                AudioSource.PlayClipAtPoint(playerAudio.FootstepAudioClips[index], transform.TransformPoint(_controller.center), playerAudio.FootstepAudioVolume);
             }
         }
 
         private void PlayLandingAudio(CharacterController _controller)
         {
-            AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
+            AudioSource.PlayClipAtPoint(playerAudio.LandingAudioClip, transform.TransformPoint(_controller.center), playerAudio.FootstepAudioVolume);
         }
     }
 

@@ -59,7 +59,8 @@ namespace StarterAssets.Player.Movement
 
             if (_virtualCamera == null)
             {
-                _virtualCamera = FindFirstObjectByType<CinemachineVirtualCamera>();
+                GameObject playerFollowCamera = GameObject.FindGameObjectWithTag("PlayerFollowCamera");
+                _virtualCamera = playerFollowCamera.GetComponent<CinemachineVirtualCamera>();
             }
         }
 
