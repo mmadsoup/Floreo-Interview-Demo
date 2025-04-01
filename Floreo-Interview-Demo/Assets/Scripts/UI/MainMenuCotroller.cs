@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Unity.Netcode;
 
 namespace StarterAssets.Menu
 {
@@ -17,6 +18,7 @@ namespace StarterAssets.Menu
         public event Action OnSinglePlayerButtonClicked;
         public event Action OnHostButtonClicked;
         public event Action OnJoinButtonClicked;
+        
         void Awake()
         {
             _ui = GetComponent<UIDocument>().rootVisualElement;
@@ -49,7 +51,7 @@ namespace StarterAssets.Menu
         
         private void OnMultiplayerClicked()
         {
-        ButtonTwoStateHandler();
+            ButtonTwoStateHandler();
         }
 
         private void ButtonOneStateHandler()
@@ -78,6 +80,7 @@ namespace StarterAssets.Menu
                     _buttonOne.text = "Host";
                 break;
                 case MenuState.Multiplayer:
+                    NetworkManager.Singleton.StartClient();
                     OnJoinButtonClicked?.Invoke();
                     UnloadMenu();
                 break;
