@@ -3,6 +3,8 @@ using StarterAssets.Player.Animation;
 using StarterAssets.Player.Audio;
 using UnityEngine;
 using Unity.Netcode;
+using Cinemachine;
+
 
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
@@ -13,7 +15,7 @@ namespace StarterAssets.Player.Movement
 {
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(PlayerAudio))]
-    [RequireComponent(typeof(PlayerAnimation))]
+    [RequireComponent(typeof(MultiplayerAnimation))]
     [RequireComponent(typeof(PlayerCamera))]
 #if ENABLE_INPUT_SYSTEM 
     [RequireComponent(typeof(PlayerInput))]
@@ -28,8 +30,9 @@ namespace StarterAssets.Player.Movement
         private CharacterController _controller;
         private StarterAssetsInputs _input;
         private GameObject _mainCamera;
-        private PlayerAnimation _playerAnimator;
+        private MultiplayerAnimation _playerAnimator;
         private PlayerCamera _playerCamera;
+        private CinemachineVirtualCamera _virtualCamera;
 
         public event Action<CharacterController> OnFootStepped;
         public event Action<CharacterController> OnPlayerLanded;
@@ -44,23 +47,19 @@ namespace StarterAssets.Player.Movement
         // timeout deltatime
         private float jumpTimeoutDelta;
         private float fallTimeoutDelta;
-        private bool IsCurrentDeviceMouse
-        {
-            get
-            {
-#if ENABLE_INPUT_SYSTEM
-                return _playerInput.currentControlScheme == "KeyboardMouse";
-#else
-				return false;
-#endif
-            }
-        }
 
+
+        
         private void Awake()
         {
             if (_mainCamera == null)
             {
                 _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+            }
+
+            if (_virtualCamera == null)
+            {
+                _virtualCamera = FindFirstObjectByType<CinemachineVirtualCamera>();
             }
         }
 
@@ -69,22 +68,28 @@ namespace StarterAssets.Player.Movement
             _playerCamera = GetComponent<PlayerCamera>();
             _playerCamera.InitializeCamera();
 
-            _playerAnimator = GetComponent<PlayerAnimation>();
+            _playerAnimator = GetComponent<MultiplayerAnimation>();
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
             _playerAnimator.AssignAnimationIDs();
-#if ENABLE_INPUT_SYSTEM 
-            _playerInput = GetComponent<PlayerInput>();
             
-#else       
-			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
-#endif
             jumpTimeoutDelta = PlayerComponents.JumpTimeout;
             fallTimeoutDelta = PlayerComponents.FallTimeout;
         }
 
+        public override void OnNetworkSpawn()
+        {
+            if (IsClient && IsOwner)
+            {
+                _playerInput = GetComponent<PlayerInput>();
+                _playerInput.enabled = true;
+                _virtualCamera.Follow = transform.GetChild(0);
+            }
+        }
+
         private void Update()
         {
+            if (!IsOwner) return;
             _playerAnimator.GetAnimatorComponent();
             JumpAndGravity();
             GroundedCheck();
@@ -93,7 +98,7 @@ namespace StarterAssets.Player.Movement
 
         private void LateUpdate()
         {
-            _playerCamera.RotateCamera(_input.look, IsCurrentDeviceMouse);
+            _playerCamera.RotateCamera(_input.look, true);
         }
 
         
@@ -203,7 +208,7 @@ namespace StarterAssets.Player.Movement
             }
         }
 
-        private void OnFootstep(AnimationEvent animationEvent)
+       private void OnFootstep(AnimationEvent animationEvent)
         {
             if (animationEvent.animatorClipInfo.weight > 0.5f)
             {
