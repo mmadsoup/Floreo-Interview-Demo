@@ -13,6 +13,7 @@ using StarterAssets.Player.Camera;
 
 namespace StarterAssets.Player.Movement
 {
+    [RequireComponent (typeof(PlayerMovementBaseClass))]
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(MultiplayerAudio))]
     [RequireComponent(typeof(MultiplayerAnimation))]
@@ -33,6 +34,7 @@ namespace StarterAssets.Player.Movement
         private MultiplayerAnimation _playerAnimator;
         private PlayerCamera _playerCamera;
         private CinemachineVirtualCamera _virtualCamera;
+        private PlayerMovementBaseClass playerMovementBase;
 
         public event Action<CharacterController> OnFootStepped;
         public event Action<CharacterController> OnPlayerLanded;
@@ -73,8 +75,8 @@ namespace StarterAssets.Player.Movement
             _input = GetComponent<StarterAssetsInputs>();
             _playerAnimator.AssignAnimationIDs();
             
-            jumpTimeoutDelta = PlayerComponents.JumpTimeout;
-            fallTimeoutDelta = PlayerComponents.FallTimeout;
+            playerMovementBase = GetComponent<PlayerMovementBaseClass>();
+            playerMovementBase.InitMovement(PlayerComponents);
         }
 
         public override void OnNetworkSpawn()
@@ -91,9 +93,9 @@ namespace StarterAssets.Player.Movement
         {
             if (!IsOwner) return;
             _playerAnimator.GetAnimatorComponent();
-            JumpAndGravity();
-            GroundedCheck();
-            Move();
+            playerMovementBase.JumpAndGravity(PlayerComponents, _input, _playerAnimator);
+            playerMovementBase.GroundedCheck(PlayerComponents, _playerAnimator);
+            playerMovementBase.Move(PlayerComponents, _input, _controller, _mainCamera, _playerAnimator);
         }
 
         private void LateUpdate()

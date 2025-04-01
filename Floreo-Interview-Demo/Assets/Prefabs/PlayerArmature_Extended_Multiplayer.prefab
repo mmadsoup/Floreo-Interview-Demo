@@ -1908,6 +1908,7 @@ GameObject:
   - component: {fileID: 8538067159574635483}
   - component: {fileID: -515660717646827512}
   - component: {fileID: -4981503563127354578}
+  - component: {fileID: 1570851970839332280}
   - component: {fileID: 5156395842948218232}
   - component: {fileID: 6361975851591138645}
   - component: {fileID: 5335149483472221990}
@@ -2210,6 +2211,18 @@ MonoBehaviour:
   BottomClamp: -30
   CameraAngleOverride: 0
   LockCameraPosition: 0
+--- !u!114 &1570851970839332280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7092922413353841018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f66f462d9b2415439db8a317469e060, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5156395842948218232
 MonoBehaviour:
   m_ObjectHideFlags: 0
