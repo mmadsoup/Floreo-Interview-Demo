@@ -14,7 +14,7 @@ using StarterAssets.Player.Camera;
 namespace StarterAssets.Player.Movement
 {
     [RequireComponent(typeof(CharacterController))]
-    [RequireComponent(typeof(PlayerAudio))]
+    [RequireComponent(typeof(MultiplayerAudio))]
     [RequireComponent(typeof(MultiplayerAnimation))]
     [RequireComponent(typeof(PlayerCamera))]
 #if ENABLE_INPUT_SYSTEM 
@@ -98,7 +98,7 @@ namespace StarterAssets.Player.Movement
 
         private void LateUpdate()
         {
-            _playerCamera.RotateCamera(_input.look, true);
+            _playerCamera.RotateCamera(_input.look);
         }
 
         

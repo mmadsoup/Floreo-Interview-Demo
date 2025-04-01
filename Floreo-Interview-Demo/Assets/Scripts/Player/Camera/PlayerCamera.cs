@@ -28,19 +28,18 @@ namespace StarterAssets.Player.Camera
                 _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
             }
 
-            public void RotateCamera(Vector2 input, bool isCurrentDeviceMouse)
+            public void RotateCamera(Vector2 input)
             {
                 // if there is an input and camera position is not fixed
                 if (input.sqrMagnitude >= _threshold && !LockCameraPosition)
                 {
-                    if (isCurrentDeviceMouse) 
-                    {
+                
                         //Don't multiply mouse input by Time.deltaTime;
-                        float deltaTimeMultiplier = isCurrentDeviceMouse ? 1.0f : Time.deltaTime;
+                        float deltaTimeMultiplier = 1.0f;
 
                         _cinemachineTargetYaw += input.x * deltaTimeMultiplier;
                         _cinemachineTargetPitch += input.y * deltaTimeMultiplier;
-                    }
+                    
                 }
 
                 // clamp our rotations so our values are limited 360 degrees

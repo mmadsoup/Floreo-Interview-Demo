@@ -34,13 +34,8 @@ namespace StarterAssets.Player.Animation
         {
             GetAnimatorComponent();
         }
-       
 
        public abstract void PlayGroundedAnimation();
-       /*{
-            if (!_hasAnimator) return;
-            _animator.SetBool(_animIDGrounded, playerMovement.PlayerComponents.Grounded);
-       }*/
 
        public void PlayJumpAndFallAnimation()
        {

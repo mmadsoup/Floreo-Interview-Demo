@@ -1907,10 +1907,10 @@ GameObject:
   - component: {fileID: 2567064373897828932}
   - component: {fileID: 8538067159574635483}
   - component: {fileID: -515660717646827512}
-  - component: {fileID: 7059487747574461156}
   - component: {fileID: -4981503563127354578}
   - component: {fileID: 5156395842948218232}
   - component: {fileID: 6361975851591138645}
+  - component: {fileID: 5335149483472221990}
   m_Layer: 8
   m_Name: PlayerArmature_Extended_Multiplayer
   m_TagString: Player
@@ -2193,22 +2193,6 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   TransitionStateInfoList: []
   m_Animator: {fileID: 1970691073626404967}
---- !u!114 &7059487747574461156
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7092922413353841018}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: acaf3a06576125445aa2eba42bc9fa09, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LandingAudioClip: {fileID: 8300000, guid: ff697d3070687ce4583faa0561a145a2, type: 3}
-  FootstepAudioClips:
-  - {fileID: 8300000, guid: 72f526a6a9890f643a88e85a61c86c8a, type: 3}
-  FootstepAudioVolume: 0.5
 --- !u!114 &-4981503563127354578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2252,6 +2236,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bcb288f72e6d624697f3f7403b88aa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5335149483472221990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7092922413353841018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89ead8efd43287146aa9aac352093c85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerAudio: {fileID: 11400000, guid: b042839e2884c2148a2da62ad0d1e29f, type: 2}
 --- !u!1 &7200750062316781965
 GameObject:
   m_ObjectHideFlags: 0
