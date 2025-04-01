@@ -21,7 +21,7 @@ namespace StarterAssets.Player.Movement
 #if ENABLE_INPUT_SYSTEM 
     [RequireComponent(typeof(PlayerInput))]
 #endif
-    public class MultiplayerMovement : NetworkBehaviour, IPlayerController
+    public class MultiplayerMovement : NetworkBehaviour
     {
         public PlayerComponentsSO PlayerComponents;
 
