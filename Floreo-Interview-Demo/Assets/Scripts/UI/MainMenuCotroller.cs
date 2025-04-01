@@ -80,7 +80,6 @@ namespace StarterAssets.Menu
                     _buttonOne.text = "Host";
                 break;
                 case MenuState.Multiplayer:
-                    NetworkManager.Singleton.StartClient();
                     OnJoinButtonClicked?.Invoke();
                     UnloadMenu();
                 break;

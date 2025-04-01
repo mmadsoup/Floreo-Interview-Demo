@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace StarterAssets.Player.Movement
 {
-    public abstract class PlayerBaseMovement : MonoBehaviour
+    public abstract class PlayerBaseMovement 
     {
         protected float speed;
         
@@ -15,8 +15,8 @@ namespace StarterAssets.Player.Movement
         protected float jumpTimeoutDelta;
         protected float fallTimeoutDelta;
 
-        protected abstract void Move();
+        /*protected abstract void Move();
         protected abstract void GroundedCheck();
-        protected abstract void JumpAndGravity();
+        protected abstract void JumpAndGravity();*/
     }
 }

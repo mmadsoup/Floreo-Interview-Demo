@@ -20,11 +20,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 90b8517c5e1fc32438cb79af3c5d68d2
-    m_Address: Assets/Scenes/Playground_Multi_Client.unity
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: cc48600045bcce749b21ce8542974ffd, type: 2}
   m_SchemaSet:

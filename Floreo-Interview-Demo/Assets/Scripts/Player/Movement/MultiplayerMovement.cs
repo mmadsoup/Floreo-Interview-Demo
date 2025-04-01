@@ -1,8 +1,10 @@
-﻿using System;
+using System;
 using StarterAssets.Player.Animation;
 using StarterAssets.Player.Audio;
 using UnityEngine;
-#if ENABLE_INPUT_SYSTEM 
+using Unity.Netcode;
+
+#if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 using StarterAssets.Player.Camera;
 #endif
@@ -10,13 +12,13 @@ using StarterAssets.Player.Camera;
 namespace StarterAssets.Player.Movement
 {
     [RequireComponent(typeof(CharacterController))]
-    //[RequireComponent(typeof(PlayerAudio))]
-    [RequireComponent(typeof(PlayerAnimationMultiplayer))]
-    //[RequireComponent(typeof(PlayerCamera))]
+    [RequireComponent(typeof(PlayerAudio))]
+    [RequireComponent(typeof(PlayerAnimation))]
+    [RequireComponent(typeof(PlayerCamera))]
 #if ENABLE_INPUT_SYSTEM 
     [RequireComponent(typeof(PlayerInput))]
 #endif
-    public class MultiplayerMovement : PlayerBaseMovement
+    public class MultiplayerMovement : NetworkBehaviour, IPlayerController
     {
         public PlayerComponentsSO PlayerComponents;
 
@@ -26,12 +28,22 @@ namespace StarterAssets.Player.Movement
         private CharacterController _controller;
         private StarterAssetsInputs _input;
         private GameObject _mainCamera;
-        //private PlayerAnimation _playerAnimator;
+        private PlayerAnimation _playerAnimator;
         private PlayerCamera _playerCamera;
 
         public event Action<CharacterController> OnFootStepped;
         public event Action<CharacterController> OnPlayerLanded;
 
+        private float speed;
+        
+        private float targetRotation = 0.0f;
+        private float rotationVelocity;
+        private float verticalVelocity;
+        private float terminalVelocity = 53.0f;
+
+        // timeout deltatime
+        private float jumpTimeoutDelta;
+        private float fallTimeoutDelta;
         private bool IsCurrentDeviceMouse
         {
             get
@@ -57,10 +69,10 @@ namespace StarterAssets.Player.Movement
             _playerCamera = GetComponent<PlayerCamera>();
             _playerCamera.InitializeCamera();
 
-            //_playerAnimator = GetComponent<PlayerAnimation>();
+            _playerAnimator = GetComponent<PlayerAnimation>();
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
-            //_playerAnimator.AssignAnimationIDs();
+            _playerAnimator.AssignAnimationIDs();
 #if ENABLE_INPUT_SYSTEM 
             _playerInput = GetComponent<PlayerInput>();
             
@@ -73,7 +85,7 @@ namespace StarterAssets.Player.Movement
 
         private void Update()
         {
-            //_playerAnimator.GetAnimatorComponent();
+            _playerAnimator.GetAnimatorComponent();
             JumpAndGravity();
             GroundedCheck();
             Move();
@@ -85,18 +97,18 @@ namespace StarterAssets.Player.Movement
         }
 
         
-        protected override void GroundedCheck()
+        public void GroundedCheck()
         {
             Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - PlayerComponents.GroundedOffset,
                 transform.position.z);
             PlayerComponents.Grounded = Physics.CheckSphere(spherePosition, PlayerComponents.GroundedRadius, PlayerComponents.GroundLayers,
                 QueryTriggerInteraction.Ignore);
 
-            //_playerAnimator.PlayGroundedAnimation();
+            _playerAnimator.PlayGroundedAnimation();
         }
 
 
-        protected override void Move()
+        public void Move()
         {
             float targetSpeed = _input.sprint ? PlayerComponents.SprintSpeed : PlayerComponents.MoveSpeed;
 
@@ -120,8 +132,8 @@ namespace StarterAssets.Player.Movement
                 speed = targetSpeed;
             }
 
-            //_playerAnimator.AnimationBlend = Mathf.Lerp(_playerAnimator.AnimationBlend, targetSpeed, Time.deltaTime * PlayerComponents.SpeedChangeRate);
-            //if (_playerAnimator.AnimationBlend < 0.01f) _playerAnimator.AnimationBlend = 0f;
+            _playerAnimator.AnimationBlend = Mathf.Lerp(_playerAnimator.AnimationBlend, targetSpeed, Time.deltaTime * PlayerComponents.SpeedChangeRate);
+            if (_playerAnimator.AnimationBlend < 0.01f) _playerAnimator.AnimationBlend = 0f;
 
             Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
 
@@ -141,16 +153,16 @@ namespace StarterAssets.Player.Movement
             _controller.Move(targetDirection.normalized * (speed * Time.deltaTime) +
                              new Vector3(0.0f, verticalVelocity, 0.0f) * Time.deltaTime);
 
-            //_playerAnimator.UpdateAnimator(_playerAnimator.AnimationBlend, inputMagnitude);
+            _playerAnimator.UpdateAnimator(_playerAnimator.AnimationBlend, inputMagnitude);
         }
 
-        protected override void JumpAndGravity()
+        public void JumpAndGravity()
         {
             if (PlayerComponents.Grounded)
             {
                 fallTimeoutDelta = PlayerComponents.FallTimeout;
 
-                //_playerAnimator.PlayJumpAndFallAnimation();
+                _playerAnimator.PlayJumpAndFallAnimation();
 
                 if (verticalVelocity < 0.0f)
                 {
@@ -161,7 +173,7 @@ namespace StarterAssets.Player.Movement
                 {
                     verticalVelocity = Mathf.Sqrt(PlayerComponents.JumpHeight * -2f * PlayerComponents.Gravity);
 
-                    //_playerAnimator.PlayJumpAnimation();
+                    _playerAnimator.PlayJumpAnimation();
                 }
 
                 if (jumpTimeoutDelta >= 0.0f)
@@ -179,7 +191,7 @@ namespace StarterAssets.Player.Movement
                 }
                 else
                 {
-                    //_playerAnimator.PlayFallAnimation();
+                    _playerAnimator.PlayFallAnimation();
                 }
 
                 _input.jump = false;

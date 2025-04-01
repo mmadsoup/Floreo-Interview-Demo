@@ -16,7 +16,7 @@ namespace StarterAssets.Player.Movement
 #if ENABLE_INPUT_SYSTEM 
     [RequireComponent(typeof(PlayerInput))]
 #endif
-    public class PlayerMovement : PlayerBaseMovement
+    public class PlayerMovement : MonoBehaviour, IPlayerController
     {
         public PlayerComponentsSO PlayerComponents;
 
@@ -32,6 +32,16 @@ namespace StarterAssets.Player.Movement
         public event Action<CharacterController> OnFootStepped;
         public event Action<CharacterController> OnPlayerLanded;
 
+        private float speed;
+        
+        private float targetRotation = 0.0f;
+        private float rotationVelocity;
+        private float verticalVelocity;
+        private float terminalVelocity = 53.0f;
+
+        // timeout deltatime
+        private float jumpTimeoutDelta;
+        private float fallTimeoutDelta;
         private bool IsCurrentDeviceMouse
         {
             get
@@ -85,7 +95,7 @@ namespace StarterAssets.Player.Movement
         }
 
         
-        protected override void GroundedCheck()
+        public void GroundedCheck()
         {
             Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - PlayerComponents.GroundedOffset,
                 transform.position.z);
@@ -96,7 +106,7 @@ namespace StarterAssets.Player.Movement
         }
 
 
-        protected override void Move()
+        public void Move()
         {
             float targetSpeed = _input.sprint ? PlayerComponents.SprintSpeed : PlayerComponents.MoveSpeed;
 
@@ -144,7 +154,7 @@ namespace StarterAssets.Player.Movement
             _playerAnimator.UpdateAnimator(_playerAnimator.AnimationBlend, inputMagnitude);
         }
 
-        protected override void JumpAndGravity()
+        public void JumpAndGravity()
         {
             if (PlayerComponents.Grounded)
             {

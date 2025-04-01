@@ -1,15 +1,19 @@
 using UnityEngine;
+using StarterAssets.Player.Movement;
 
-public abstract class PlayerAnimatorBaseClass : MonoBehaviour
+namespace StarterAssets.Player.Animation
 {
-    protected Animator _animator;
-    protected int _animIDSpeed;
-    protected int _animIDGrounded;
-    protected int _animIDJump;
-    protected int _animIDFreeFall;
-    protected int _animIDMotionSpeed;
-    protected bool _hasAnimator;
-    public float AnimationBlend {get; set;}
+    public abstract class PlayerAnimatorBaseClass : MonoBehaviour
+    {
+     //private PlayerMovement playerMovement;
+     protected Animator _animator;
+     protected int _animIDSpeed;
+     protected int _animIDGrounded;
+     protected int _animIDJump;
+     protected int _animIDFreeFall;
+     protected int _animIDMotionSpeed;
+     protected bool _hasAnimator;
+     public float AnimationBlend {get; set;}
     
     public void GetAnimatorComponent()
        {
@@ -24,14 +28,46 @@ public abstract class PlayerAnimatorBaseClass : MonoBehaviour
             _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
         }
 
-        
-       public abstract void PlayGroundedAnimation();
-       public abstract void PlayJumpAndFallAnimation();
+        public abstract void GetPlayerMovemenComponent();
 
-       public abstract void PlayJumpAnimation();
+        void Start()
+        {
+            GetAnimatorComponent();
+        }
        
-       public abstract void UpdateAnimator(float animBlend, float inputMagnitude);
 
-       public abstract void PlayFallAnimation();
-    
+       public abstract void PlayGroundedAnimation();
+       /*{
+            if (!_hasAnimator) return;
+            _animator.SetBool(_animIDGrounded, playerMovement.PlayerComponents.Grounded);
+       }*/
+
+       public void PlayJumpAndFallAnimation()
+       {
+            if (!_hasAnimator) return;
+            _animator.SetBool(_animIDJump, false);
+            _animator.SetBool(_animIDFreeFall, false);
+       }
+
+       public void PlayJumpAnimation()
+       {
+            if (!_hasAnimator) return;
+            _animator.SetBool(_animIDJump, true);
+       }
+       
+       public void UpdateAnimator(float animBlend, float inputMagnitude)
+       {
+            if (!_hasAnimator) return;
+            _animator.SetFloat(_animIDSpeed, animBlend);
+            _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
+       }
+
+       public void PlayFallAnimation()
+       {
+            if (!_hasAnimator) return;
+            _animator.SetBool(_animIDFreeFall, true);
+       }
+   
+    }
 }
+
