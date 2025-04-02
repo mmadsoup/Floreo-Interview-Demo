@@ -15,13 +15,93 @@ MonoBehaviour:
   m_GroupName: SinglePlayerScene
   m_GUID: e3afdab511cb94249adb8d68e1b2ec36
   m_SerializeEntries:
+  - m_GUID: 05d6d6888001787418f7e937a0e165ab
+    m_Address: Assets/Third Party/UnityTechnologies/LevelUpYourCode/_DesignPatterns/8_Strategy/Strategy.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 253506c4f2e77344c83663c20536527b
+    m_Address: Assets/Third Party/UnityTechnologies/LevelUpYourCode/_SOLID/5_DependencyInversion/DependencyInversion.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2f6a9e720ab599643bf7d5a656dcee0e
+    m_Address: Assets/Third Party/UnityTechnologies/LevelUpYourCode/_DesignPatterns/9_Flyweight/Flyweight.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3ac7eab8cdffc284a94a3718d3bf4b31
     m_Address: Assets/Scenes/Playground_Single.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 556b0944964c45841ab8ab40b0ac47ed
+    m_Address: Assets/Third Party/UnityTechnologies/LevelUpYourCode/_DesignPatterns/4_Command/Command.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 580ec8a35c5134f67a7117b713c17130
+    m_Address: Assets/Third Party/UnityTechnologies/LevelUpYourCode/_DesignPatterns/6_Observer/Observer.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5c5f99b647c927c4586a23bf45428002
+    m_Address: Assets/Third Party/UnityTechnologies/LevelUpYourCode/_DesignPatterns/7_MVP_UIToolkit/MVP_UIToolkit.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6111648a4334e478abe671bc8ba48c12
+    m_Address: Assets/Third Party/UnityTechnologies/LevelUpYourCode/_DesignPatterns/1_Factory/Factory.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6f2348bd6b4371d4ca7a221cfff014e2
+    m_Address: Assets/Third Party/UnityTechnologies/LevelUpYourCode/_DesignPatterns/10_DirtyFlag/DirtyFlag.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 750f70e6e50e63c46b0cac48f6199786
     m_Address: Assets/Scenes/Playground_Multi_Client.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7baa01a4cf8e9479e9945f8599f293c8
+    m_Address: Assets/Third Party/UnityTechnologies/LevelUpYourCode/_DesignPatterns/2_ObjectPool/ObjectPool.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7c6e31a3aadf5472fa539629b207aea4
+    m_Address: Assets/Third Party/UnityTechnologies/LevelUpYourCode/_DesignPatterns/7_MVP/MVP.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7e4cc0578c67652468036d32e02e7c5c
+    m_Address: Assets/Third Party/UnityTechnologies/LevelUpYourCode/_SOLID/1_SingleResponsibility/SingleResponsibility.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b1c868e161b0bc74eb18b9a89e645044
+    m_Address: Assets/Third Party/UnityTechnologies/LevelUpYourCode/_DesignPatterns/7_MVVM/MVVM.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b84c4c9fe3532cf4e93da861a56900ff
+    m_Address: Assets/Third Party/UnityTechnologies/LevelUpYourCode/_SOLID/2_OpenClosed/OpenClosed.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c6fc4c908a9e8ce4391a839f44286dc7
+    m_Address: Assets/Third Party/UnityTechnologies/LevelUpYourCode/_SOLID/3_LiskovSubstitution/LiskovSubstitution.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dff9be3e521b34a528610d73724240a8
+    m_Address: Assets/Third Party/UnityTechnologies/LevelUpYourCode/_DesignPatterns/3_Singleton/Singleton.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e8a9a1c5a70b0423889aea3aa4ebed31
+    m_Address: Assets/Third Party/UnityTechnologies/LevelUpYourCode/_DesignPatterns/5_State/State.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

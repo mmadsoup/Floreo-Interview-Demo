@@ -1,6 +1,10 @@
+using Mono.Cecil.Cil;
 using StarterAssets.Menu;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 
 namespace StarterAssets.AdrressableObjects
@@ -10,8 +14,8 @@ namespace StarterAssets.AdrressableObjects
         [SerializeField] private string _singlePlayerSceneName;
         [SerializeField] private string _multiplayerHostSceneName;
         [SerializeField] private string _multiplayerClientSceneName;
+
         private MainMenuCotroller _mainMenuCotroller;
-        
         void Awake()
         {
             GameObject mainMenuObject = GameObject.FindGameObjectWithTag("Menu");
@@ -50,7 +54,7 @@ namespace StarterAssets.AdrressableObjects
             Debug.Log("Create Client Player Controller");
         }
 
-        private void LoadSceneAdditive(string name)
+        public void LoadSceneAdditive(string name)
         {
             if (!string.IsNullOrEmpty(name))
             {
@@ -60,6 +64,12 @@ namespace StarterAssets.AdrressableObjects
             {
                 Debug.Log("Please add a scene name");
             }
+        }
+
+        public void UnloadSceneAdditive(AsyncOperationHandle<SceneInstance> handle)
+        {
+            //private AsyncOperationHandle<SceneInstance> _sceneHandle;
+            Addressables.UnloadSceneAsync(handle, UnloadSceneOptions.None);
         }
 
     }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1396639447858054710}
   m_Layer: 0
   m_Name: AddressableInstantiator
-  m_TagString: Untagged
+  m_TagString: AddressableInstantiator
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44,3 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29f437e90b3b41d4da9a4162c3e45f6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _singlePlayerSceneName: Assets/Scenes/Playground_Single.unity
+  _multiplayerHostSceneName: Assets/Scenes/Playground_Multi_Host.unity
+  _multiplayerClientSceneName: Assets/Scenes/Playground_Multi_Client.unity
