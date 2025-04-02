@@ -10,6 +10,7 @@ TagManager:
   - AddressableInstantiator
   - UIEvents
   - Environment
+  - NetworkManager
   layers:
   - Default
   - TransparentFX
