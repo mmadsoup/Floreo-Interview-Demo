@@ -1,11 +1,5 @@
 using System;
-using NUnit.Framework.Constraints;
-using StarterAssets.AdrressableObjects;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.ResourceManagement.ResourceProviders;
-using UnityEngine.SceneManagement;
 
 namespace StarterAssets.Interactive
 {
@@ -16,16 +10,18 @@ namespace StarterAssets.Interactive
         public event Action<string> OnUninteracted;
         private bool _spawned = false;   
 
-        void Awake()
-        {
-           
-               
-        }
-
         void OnTriggerEnter(Collider other)
         {
             if (_spawned) return;
             Interact();
+        }
+
+
+
+        void OnTriggerExit(Collider other)
+        {
+             OnUninteracted?.Invoke(_addressablePath);
+             _spawned = false;
         }
 
         public void Interact()
@@ -34,5 +30,4 @@ namespace StarterAssets.Interactive
              _spawned = true;
         }
     }
-
 }

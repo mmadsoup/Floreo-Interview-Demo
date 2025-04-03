@@ -1,21 +1,24 @@
 using System.Collections.Generic;
 using StarterAssets.Menu;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 using StarterAssets.Interactive;
 using System;
-
+using System.Linq;
+using System.Text.RegularExpressions;
+using DesignPatterns.Command;
 namespace StarterAssets.AdrressableObjects
 {
         public class AddressableInstantiator : MonoBehaviour
     {
-        [SerializeField] private AddressableDatabaseSO _addressables;
-
+        
         [SerializeField] private MainMenuCotroller _mainMenuCotroller;
+        [SerializeField] private string _singlePlayerPath;
+        [SerializeField] private string _hostPath;
+        [SerializeField] private string _clientPath;
         private Interactable _interactable;
+        private Dictionary<string, string> _addressableDictionary = new();
+        
         void Awake()
         {
             GameObject interactableObject = GameObject.FindGameObjectWithTag("Interactable");
@@ -28,7 +31,7 @@ namespace StarterAssets.AdrressableObjects
             _mainMenuCotroller.OnHostButtonClicked += CreateHostController;
             _mainMenuCotroller.OnJoinButtonClicked += CreateClientController;
             _interactable.OnInteracted += LoadSceneAdditive;
-
+            _interactable.OnUninteracted += UnloadSceneAdditive;
         }   
 
         void OnDisable()
@@ -38,43 +41,28 @@ namespace StarterAssets.AdrressableObjects
             _mainMenuCotroller.OnJoinButtonClicked -= CreateClientController;
         }
 
-
-        private string GetAddressableByName(string name)
-        {
-            for (int i = 0; i < _addressables.addressables.Length; i++)
-            {
-                var child = _addressables.addressables[i].addressableName;
-                if (name == child)
-                {
-                    return child = _addressables.addressables[i].addressablePath;
-                }
-            }
-            return null;
-        }
-
         private void CreateSinglePlayerController()
         {
-            var singlePlayer = GetAddressableByName("single_player");
-            LoadSceneAdditive(singlePlayer);
+            LoadSceneAdditive(_singlePlayerPath);
         }
 
          private void CreateHostController()
         {
-            var hostPlayer = GetAddressableByName("multiplayer_host");
-            LoadSceneAdditive(hostPlayer);
+            LoadSceneAdditive(_hostPath);
         }
 
         private void CreateClientController()
         {
-            var clientPlayer = GetAddressableByName("multiplayer_client");
-            LoadSceneAdditive(clientPlayer);
+           LoadSceneAdditive(_clientPath);
         }
+
+
 
         public void LoadSceneAdditive(string name)
         {
             if (!string.IsNullOrEmpty(name))
             {
-                Addressables.LoadSceneAsync(name, LoadSceneMode.Additive);
+                SceneManager.LoadSceneAsync(name, LoadSceneMode.Additive);
             }
             else
             {
@@ -82,12 +70,10 @@ namespace StarterAssets.AdrressableObjects
             }
         }
 
-        public void UnloadSceneAdditive(AsyncOperationHandle<SceneInstance> handle)
+        public void UnloadSceneAdditive(string name)
         {
-            //private AsyncOperationHandle<SceneInstance> _sceneHandle;
-            Addressables.UnloadSceneAsync(handle, UnloadSceneOptions.None);
+            SceneManager.UnloadSceneAsync(name);
         }
-
     }
 }
 
