@@ -1,25 +1,25 @@
-using Mono.Cecil.Cil;
+using System.Collections.Generic;
 using StarterAssets.Menu;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
+using StarterAssets.Interactive;
+using System;
 
 namespace StarterAssets.AdrressableObjects
 {
         public class AddressableInstantiator : MonoBehaviour
     {
-        [SerializeField] private string _singlePlayerSceneName;
-        [SerializeField] private string _multiplayerHostSceneName;
-        [SerializeField] private string _multiplayerClientSceneName;
+        [SerializeField] private AddressableDatabaseSO _addressables;
 
-        private MainMenuCotroller _mainMenuCotroller;
+        [SerializeField] private MainMenuCotroller _mainMenuCotroller;
+        private Interactable _interactable;
         void Awake()
         {
-            GameObject mainMenuObject = GameObject.FindGameObjectWithTag("Menu");
-            _mainMenuCotroller = mainMenuObject.GetComponent<MainMenuCotroller>();
+            GameObject interactableObject = GameObject.FindGameObjectWithTag("Interactable");
+            _interactable = interactableObject.GetComponent<Interactable>();
         }
 
         void OnEnable()
@@ -27,6 +27,8 @@ namespace StarterAssets.AdrressableObjects
             _mainMenuCotroller.OnSinglePlayerButtonClicked += CreateSinglePlayerController;
             _mainMenuCotroller.OnHostButtonClicked += CreateHostController;
             _mainMenuCotroller.OnJoinButtonClicked += CreateClientController;
+            _interactable.OnInteracted += LoadSceneAdditive;
+
         }   
 
         void OnDisable()
@@ -36,22 +38,36 @@ namespace StarterAssets.AdrressableObjects
             _mainMenuCotroller.OnJoinButtonClicked -= CreateClientController;
         }
 
+
+        private string GetAddressableByName(string name)
+        {
+            for (int i = 0; i < _addressables.addressables.Length; i++)
+            {
+                var child = _addressables.addressables[i].addressableName;
+                if (name == child)
+                {
+                    return child = _addressables.addressables[i].addressablePath;
+                }
+            }
+            return null;
+        }
+
         private void CreateSinglePlayerController()
         {
-            LoadSceneAdditive(_singlePlayerSceneName);
-            Debug.Log("Create Single Player Controller");
+            var singlePlayer = GetAddressableByName("single_player");
+            LoadSceneAdditive(singlePlayer);
         }
 
          private void CreateHostController()
         {
-            LoadSceneAdditive(_multiplayerHostSceneName);
-            Debug.Log("Create Host Player Controller");
+            var hostPlayer = GetAddressableByName("multiplayer_host");
+            LoadSceneAdditive(hostPlayer);
         }
 
         private void CreateClientController()
         {
-            LoadSceneAdditive(_multiplayerClientSceneName);
-            Debug.Log("Create Client Player Controller");
+            var clientPlayer = GetAddressableByName("multiplayer_client");
+            LoadSceneAdditive(clientPlayer);
         }
 
         public void LoadSceneAdditive(string name)
