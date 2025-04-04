@@ -5,10 +5,11 @@ namespace StarterAssets.Interactive
 {
     public class Interactable : MonoBehaviour, IInteractable
     {
-        [SerializeField] private string _addressablePath;  
+        [SerializeField] private string _addressablePath; 
         public event Action<string> OnInteracted;
         public event Action<string> OnUninteracted;
-        private bool _spawned = false;   
+        private bool _spawned = false;
+
 
         void OnTriggerEnter(Collider other)
         {
@@ -18,8 +19,7 @@ namespace StarterAssets.Interactive
 
         void OnTriggerExit(Collider other)
         {
-            Uninteract();
-             
+            Uninteract();;
         }
 
         public void Uninteract()
