@@ -30,18 +30,13 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 3ac7eab8cdffc284a94a3718d3bf4b31
-    m_Address: Assets/Scenes/Playground_Single.unity
+  - m_GUID: 429e376c2360e144e8bdf8145997e56d
+    m_Address: Assets/Third Party/UnityTechnologies/LevelUpYourCode/_SOLID/4_InterfaceSegregation/InterfaceSegregation.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 556b0944964c45841ab8ab40b0ac47ed
     m_Address: Assets/Third Party/UnityTechnologies/LevelUpYourCode/_DesignPatterns/4_Command/Command.unity
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 580ec8a35c5134f67a7117b713c17130
-    m_Address: Assets/Third Party/UnityTechnologies/LevelUpYourCode/_DesignPatterns/6_Observer/Observer.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -57,16 +52,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6f2348bd6b4371d4ca7a221cfff014e2
     m_Address: Assets/Third Party/UnityTechnologies/LevelUpYourCode/_DesignPatterns/10_DirtyFlag/DirtyFlag.unity
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 750f70e6e50e63c46b0cac48f6199786
-    m_Address: Assets/Scenes/Playground_Multi_Client.unity
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7baa01a4cf8e9479e9945f8599f293c8
-    m_Address: Assets/Third Party/UnityTechnologies/LevelUpYourCode/_DesignPatterns/2_ObjectPool/ObjectPool.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

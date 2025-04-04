@@ -14,12 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GroupName: MultiplayerScene
   m_GUID: 8d46dd97a0a4f974797b3f03efdc582d
-  m_SerializeEntries:
-  - m_GUID: 8700d716c0660c346a9299ac489d1834
-    m_Address: Assets/Scenes/Playground_Multi_Host.unity
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: cc48600045bcce749b21ce8542974ffd, type: 2}
   m_SchemaSet:

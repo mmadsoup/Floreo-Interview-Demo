@@ -16,12 +16,16 @@ namespace StarterAssets.Interactive
             Interact();
         }
 
-
-
         void OnTriggerExit(Collider other)
         {
-             OnUninteracted?.Invoke(_addressablePath);
-             _spawned = false;
+            Uninteract();
+             
+        }
+
+        public void Uninteract()
+        {
+            OnUninteracted?.Invoke(_addressablePath);
+            _spawned = false;
         }
 
         public void Interact()
@@ -29,5 +33,6 @@ namespace StarterAssets.Interactive
              OnInteracted?.Invoke(_addressablePath);
              _spawned = true;
         }
+        
     }
 }
