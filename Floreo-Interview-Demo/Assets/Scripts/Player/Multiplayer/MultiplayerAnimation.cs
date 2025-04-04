@@ -3,16 +3,16 @@ namespace StarterAssets.Player.Animation
 {
 public class MultiplayerAnimation : PlayerAnimatorBaseClass
 {
-     private MultiplayerMovement playerMovement;
+     private MultiplayerMovement _playerMovement;
         public override void GetPlayerMovemenComponent()
         {
-            playerMovement = GetComponent<MultiplayerMovement>();
+            _playerMovement = GetComponent<MultiplayerMovement>();
         }
 
         public override void PlayGroundedAnimation()
         {
             if (!_hasAnimator) return;
-            _animator.SetBool(_animIDGrounded, playerMovement.PlayerComponents.Grounded);
+            _animator.SetBool(_animIDGrounded, _playerMovement.PlayerComponents.Grounded);
         }
 
         void Awake()

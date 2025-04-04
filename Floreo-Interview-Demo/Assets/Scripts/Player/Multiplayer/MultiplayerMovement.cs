@@ -34,21 +34,21 @@ namespace StarterAssets.Player.Movement
         private MultiplayerAnimation _playerAnimator;
         private PlayerCamera _playerCamera;
         private CinemachineVirtualCamera _virtualCamera;
-        private PlayerMovementBaseClass playerMovementBase;
+        private PlayerMovementBaseClass _playerMovementBase;
 
         public event Action<CharacterController> OnFootStepped;
         public event Action<CharacterController> OnPlayerLanded;
 
-        private float speed;
+        private float _speed;
         
-        private float targetRotation = 0.0f;
-        private float rotationVelocity;
-        private float verticalVelocity;
-        private float terminalVelocity = 53.0f;
+        private float _targetRotation = 0.0f;
+        private float _rotationVelocity;
+        private float _verticalVelocity;
+        private float _terminalVelocity = 53.0f;
 
         // timeout deltatime
-        private float jumpTimeoutDelta;
-        private float fallTimeoutDelta;
+        private float _jumpTimeoutDelta;
+        private float _fallTimeoutDelta;
 
 
         
@@ -75,8 +75,8 @@ namespace StarterAssets.Player.Movement
             _input = GetComponent<StarterAssetsInputs>();
             _playerAnimator.AssignAnimationIDs();
             
-            playerMovementBase = GetComponent<PlayerMovementBaseClass>();
-            playerMovementBase.InitMovement(PlayerComponents);
+            _playerMovementBase = GetComponent<PlayerMovementBaseClass>();
+            _playerMovementBase.InitMovement(PlayerComponents);
         }
 
         public override void OnNetworkSpawn()
@@ -93,9 +93,9 @@ namespace StarterAssets.Player.Movement
         {
             if (!IsOwner) return;
             _playerAnimator.GetAnimatorComponent();
-            playerMovementBase.JumpAndGravity(PlayerComponents, _input, _playerAnimator);
-            playerMovementBase.GroundedCheck(PlayerComponents, _playerAnimator);
-            playerMovementBase.Move(PlayerComponents, _input, _controller, _mainCamera, _playerAnimator);
+            _playerMovementBase.JumpAndGravity(PlayerComponents, _input, _playerAnimator);
+            _playerMovementBase.GroundedCheck(PlayerComponents, _playerAnimator);
+            _playerMovementBase.Move(PlayerComponents, _input, _controller, _mainCamera, _playerAnimator);
         }
 
         private void LateUpdate()
@@ -117,48 +117,48 @@ namespace StarterAssets.Player.Movement
 
         public void Move()
         {
-            float targetSpeed = _input.sprint ? PlayerComponents.SprintSpeed : PlayerComponents.MoveSpeed;
+            float target_speed = _input.sprint ? PlayerComponents.SprintSpeed : PlayerComponents.MoveSpeed;
 
-            if (_input.move == Vector2.zero) targetSpeed = 0.0f;
+            if (_input.move == Vector2.zero) target_speed = 0.0f;
 
-            float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
+            float currentHorizontal_speed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
 
-            float speedOffset = 0.1f;
+            float _speedOffset = 0.1f;
             float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
 
-            if (currentHorizontalSpeed < targetSpeed - speedOffset ||
-                currentHorizontalSpeed > targetSpeed + speedOffset)
+            if (currentHorizontal_speed < target_speed - _speedOffset ||
+                currentHorizontal_speed > target_speed + _speedOffset)
             {
-                speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude,
+                _speed = Mathf.Lerp(currentHorizontal_speed, target_speed * inputMagnitude,
                     Time.deltaTime * PlayerComponents.SpeedChangeRate);
 
-                speed = Mathf.Round(speed * 1000f) / 1000f;
+                _speed = Mathf.Round(_speed * 1000f) / 1000f;
             }
             else
             {
-                speed = targetSpeed;
+                _speed = target_speed;
             }
 
-            _playerAnimator.AnimationBlend = Mathf.Lerp(_playerAnimator.AnimationBlend, targetSpeed, Time.deltaTime * PlayerComponents.SpeedChangeRate);
+            _playerAnimator.AnimationBlend = Mathf.Lerp(_playerAnimator.AnimationBlend, target_speed, Time.deltaTime * PlayerComponents.SpeedChangeRate);
             if (_playerAnimator.AnimationBlend < 0.01f) _playerAnimator.AnimationBlend = 0f;
 
             Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
 
             if (_input.move != Vector2.zero)
             {
-                targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
+                _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
                                   _mainCamera.transform.eulerAngles.y;
-                float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref rotationVelocity,
+                float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity,
                     PlayerComponents.RotationSmoothTime);
 
                 transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
             }
 
 
-            Vector3 targetDirection = Quaternion.Euler(0.0f, targetRotation, 0.0f) * Vector3.forward;
+            Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
 
-            _controller.Move(targetDirection.normalized * (speed * Time.deltaTime) +
-                             new Vector3(0.0f, verticalVelocity, 0.0f) * Time.deltaTime);
+            _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
+                             new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
 
             _playerAnimator.UpdateAnimator(_playerAnimator.AnimationBlend, inputMagnitude);
         }
@@ -167,34 +167,34 @@ namespace StarterAssets.Player.Movement
         {
             if (PlayerComponents.Grounded)
             {
-                fallTimeoutDelta = PlayerComponents.FallTimeout;
+                _fallTimeoutDelta = PlayerComponents.FallTimeout;
 
                 _playerAnimator.PlayJumpAndFallAnimation();
 
-                if (verticalVelocity < 0.0f)
+                if (_verticalVelocity < 0.0f)
                 {
-                    verticalVelocity = -2f;
+                    _verticalVelocity = -2f;
                 }
 
-                if (_input.jump && jumpTimeoutDelta <= 0.0f)
+                if (_input.jump && _jumpTimeoutDelta <= 0.0f)
                 {
-                    verticalVelocity = Mathf.Sqrt(PlayerComponents.JumpHeight * -2f * PlayerComponents.Gravity);
+                    _verticalVelocity = Mathf.Sqrt(PlayerComponents.JumpHeight * -2f * PlayerComponents.Gravity);
 
                     _playerAnimator.PlayJumpAnimation();
                 }
 
-                if (jumpTimeoutDelta >= 0.0f)
+                if (_jumpTimeoutDelta >= 0.0f)
                 {
-                    jumpTimeoutDelta -= Time.deltaTime;
+                    _jumpTimeoutDelta -= Time.deltaTime;
                 }
             }
             else
             {
-                jumpTimeoutDelta = PlayerComponents.JumpTimeout;
+                _jumpTimeoutDelta = PlayerComponents.JumpTimeout;
 
-                if (fallTimeoutDelta >= 0.0f)
+                if (_fallTimeoutDelta >= 0.0f)
                 {
-                    fallTimeoutDelta -= Time.deltaTime;
+                    _fallTimeoutDelta -= Time.deltaTime;
                 }
                 else
                 {
@@ -204,9 +204,9 @@ namespace StarterAssets.Player.Movement
                 _input.jump = false;
             }
 
-            if (verticalVelocity < terminalVelocity)
+            if (_verticalVelocity < _terminalVelocity)
             {
-                verticalVelocity += PlayerComponents.Gravity * Time.deltaTime;
+                _verticalVelocity += PlayerComponents.Gravity * Time.deltaTime;
             }
         }
 

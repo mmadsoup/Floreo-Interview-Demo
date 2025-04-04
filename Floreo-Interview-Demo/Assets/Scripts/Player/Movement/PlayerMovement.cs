@@ -25,7 +25,7 @@ namespace StarterAssets.Player.Movement
         private PlayerInput _playerInput;
 #endif
 
-        private PlayerMovementBaseClass playerMovementBase;
+        private PlayerMovementBaseClass _playerMovementBase;
         private CharacterController _controller;
         private StarterAssetsInputs _input;
         private GameObject _mainCamera;
@@ -71,16 +71,16 @@ namespace StarterAssets.Player.Movement
 #else       
 			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
 #endif      
-            playerMovementBase = GetComponent<PlayerMovementBaseClass>();
-            playerMovementBase.InitMovement(PlayerComponents);
+            _playerMovementBase = GetComponent<PlayerMovementBaseClass>();
+            _playerMovementBase.InitMovement(PlayerComponents);
         }
 
         private void Update()
         {
             _playerAnimator.GetAnimatorComponent();
-            playerMovementBase.JumpAndGravity(PlayerComponents, _input, _playerAnimator);
-            playerMovementBase.GroundedCheck(PlayerComponents, _playerAnimator);
-            playerMovementBase.Move(PlayerComponents, _input, _controller, _mainCamera, _playerAnimator);
+            _playerMovementBase.JumpAndGravity(PlayerComponents, _input, _playerAnimator);
+            _playerMovementBase.GroundedCheck(PlayerComponents, _playerAnimator);
+            _playerMovementBase.Move(PlayerComponents, _input, _controller, _mainCamera, _playerAnimator);
         }
 
         private void LateUpdate()

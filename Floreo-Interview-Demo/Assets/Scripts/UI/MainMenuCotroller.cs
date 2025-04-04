@@ -45,7 +45,6 @@ namespace StarterAssets.Menu
 
         private void OnSinglePlayerClicked()
         {
-            
             ButtonOneStateHandler();
         }
         

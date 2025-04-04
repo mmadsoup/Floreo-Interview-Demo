@@ -483,7 +483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acaf3a06576125445aa2eba42bc9fa09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerAudio: {fileID: 11400000, guid: b042839e2884c2148a2da62ad0d1e29f, type: 2}
+  _playerAudio: {fileID: 11400000, guid: b042839e2884c2148a2da62ad0d1e29f, type: 2}
 --- !u!114 &6184087691021306573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -509,10 +509,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CinemachineCameraTarget: {fileID: 1171034973618871313}
-  TopClamp: 70
-  BottomClamp: -30
-  CameraAngleOverride: 0
-  LockCameraPosition: 0
 --- !u!1 &944507624585689682
 GameObject:
   m_ObjectHideFlags: 0

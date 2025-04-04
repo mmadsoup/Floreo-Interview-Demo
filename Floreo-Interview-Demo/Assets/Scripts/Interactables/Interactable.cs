@@ -26,12 +26,14 @@ namespace StarterAssets.Interactive
         {
             OnUninteracted?.Invoke(_addressablePath);
             _spawned = false;
+            Cursor.visible = false;
         }
 
         public void Interact()
         {
              OnInteracted?.Invoke(_addressablePath);
              _spawned = true;
+            Cursor.visible = true;
         }
         
     }

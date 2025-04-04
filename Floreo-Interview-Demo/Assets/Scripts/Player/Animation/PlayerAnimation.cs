@@ -1,20 +1,19 @@
-using UnityEngine;
 using StarterAssets.Player.Movement;
 
 namespace StarterAssets.Player.Animation
 {
     public class PlayerAnimation : PlayerAnimatorBaseClass
     {
-     private PlayerMovement playerMovement;
+     private PlayerMovement _playerMovement;
         public override void GetPlayerMovemenComponent()
         {
-            playerMovement = GetComponent<PlayerMovement>();
+            _playerMovement = GetComponent<PlayerMovement>();
         }
 
         public override void PlayGroundedAnimation()
         {
             if (!_hasAnimator) return;
-            _animator.SetBool(_animIDGrounded, playerMovement.PlayerComponents.Grounded);
+            _animator.SetBool(_animIDGrounded, _playerMovement.PlayerComponents.Grounded);
         }
 
         void Awake()
