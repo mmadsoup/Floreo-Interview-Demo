@@ -26,6 +26,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Third Party/UnityTechnologies/LevelUpYourCode/_SOLID/4_InterfaceSegregation/InterfaceSegregation.unity
     guid: 429e376c2360e144e8bdf8145997e56d
+  - enabled: 1
+    path: Assets/Third Party/UnityTechnologies/LevelUpYourCode/_SOLID/5_DependencyInversion/DependencyInversion.unity
+    guid: 253506c4f2e77344c83663c20536527b
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: c8bdb5a6835389448b4566e20e7abebc, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
