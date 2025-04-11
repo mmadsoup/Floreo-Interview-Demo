@@ -40,16 +40,8 @@ namespace StarterAssets.Player.Movement
             playerAnimation.PlayGroundedAnimation();
         }
 
-        public void GroundedCheck(PlayerComponentsSO playerComponents, MultiplayerAnimation playerAnimation)
-        {
-            GroundedCheckLogic(playerComponents);
-            playerAnimation.PlayGroundedAnimation();
-        }
-
         private void MoveLogic(float currentHorizontalSpeed, float targetSpeed, PlayerComponentsSO playerComponents, StarterAssetsInputs input, CharacterController controller)
         {
-           
-
             if (currentHorizontalSpeed < targetSpeed - _speedOffset ||
                 currentHorizontalSpeed > targetSpeed + _speedOffset)
             {
@@ -79,8 +71,6 @@ namespace StarterAssets.Player.Movement
                 transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
             }
 
-
-            
         }
 
         public void Move(PlayerComponentsSO playerComponents, StarterAssetsInputs input, CharacterController controller, GameObject mainCamera, PlayerAnimation playerAnimation) 
@@ -105,27 +95,6 @@ namespace StarterAssets.Player.Movement
             playerAnimation.UpdateAnimator(playerAnimation.AnimationBlend, _inputMagnitude);
         }
 
-        public void Move(PlayerComponentsSO playerComponents, StarterAssetsInputs input, CharacterController controller, GameObject mainCamera, MultiplayerAnimation playerAnimation) 
-        {
-            float targetSpeed = input.sprint ? playerComponents.SprintSpeed : playerComponents.MoveSpeed;
-             if (input.move == Vector2.zero) targetSpeed = 0.0f;
-
-            float currentHorizontalSpeed = new Vector3(controller.velocity.x, 0.0f, controller.velocity.z).magnitude;
-            _inputMagnitude = input.analogMovement ? input.move.magnitude : 1f;
-            
-            MoveLogic(currentHorizontalSpeed, targetSpeed, playerComponents, input, controller);
-
-            playerAnimation.AnimationBlend = Mathf.Lerp(playerAnimation.AnimationBlend, targetSpeed, Time.deltaTime * playerComponents.SpeedChangeRate);
-            if (playerAnimation.AnimationBlend < 0.01f) playerAnimation.AnimationBlend = 0f;
-
-           RotationLogic(playerComponents, input, mainCamera);
-            Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
-            
-            controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
-                             new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
-
-            playerAnimation.UpdateAnimator(playerAnimation.AnimationBlend, _inputMagnitude);
-        }
 
         public void JumpAndGravityLogic(PlayerComponentsSO playerComponents, StarterAssetsInputs input)
         {
@@ -189,25 +158,5 @@ namespace StarterAssets.Player.Movement
            }
         }
 
-        public void JumpAndGravity(PlayerComponentsSO playerComponents, StarterAssetsInputs input, MultiplayerAnimation playerAnimation)
-        {
-             JumpAndGravityLogic(playerComponents, input);
-           if (playerComponents.Grounded)
-           {
-                playerAnimation.PlayJumpAndFallAnimation();
-
-                if (input.jump && _jumpTimeoutDelta <= 0.0f)
-                {
-                    playerAnimation.PlayJumpAnimation();
-                }
-           } 
-           else
-           {
-                if (_fallTimeoutDelta <= 0.0f)
-                {
-                    playerAnimation.PlayFallAnimation();
-                }
-           }
-        }
     }
 }

@@ -4,7 +4,6 @@ using UnityEngine;
 public class PlayerComponentsSO : ScriptableObject
 {
     [Header("Player")]
-        [Tooltip("Move speed of the character in m/s")]
         public float MoveSpeed;
 
         [Tooltip("Sprint speed of the character in m/s")]

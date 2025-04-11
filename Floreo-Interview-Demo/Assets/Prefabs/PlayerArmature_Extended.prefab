@@ -471,6 +471,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerComponents: {fileID: 11400000, guid: 79fe0c7209738ad46b683b47706d608d, type: 2}
+  _playerControllerType: {fileID: 11400000, guid: 668ed99e122cee6498b05e840c8ac34b, type: 2}
 --- !u!114 &7641498580121411575
 MonoBehaviour:
   m_ObjectHideFlags: 0

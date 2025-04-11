@@ -1,8 +1,13 @@
-﻿using System;
+using System;
 using StarterAssets.Player.Animation;
 using StarterAssets.Player.Audio;
 using UnityEngine;
-#if ENABLE_INPUT_SYSTEM 
+using Unity.Netcode;
+using Cinemachine;
+using System.Diagnostics.Contracts;
+
+
+#if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 using StarterAssets.Player.Camera;
 #endif
@@ -20,6 +25,9 @@ namespace StarterAssets.Player.Movement
     public class PlayerMovement : MonoBehaviour
     {
         public PlayerComponentsSO PlayerComponents;
+        //[SerializeField] private PlayerControllerSO _playerControllerType;
+        [SerializeField] private PlayerControllerType _playerControllerType;
+        private NetworkBehaviour _networkBehavriour;
 
 #if ENABLE_INPUT_SYSTEM 
         private PlayerInput _playerInput;
@@ -31,6 +39,7 @@ namespace StarterAssets.Player.Movement
         private GameObject _mainCamera;
         private PlayerAnimation _playerAnimator;
         private PlayerCamera _playerCamera;
+        private CinemachineVirtualCamera _virtualCamera;
 
         public event Action<CharacterController> OnFootStepped;
         public event Action<CharacterController> OnPlayerLanded;
@@ -54,6 +63,7 @@ namespace StarterAssets.Player.Movement
             {
                 _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
             }
+            
         }
 
         private void Start()
@@ -62,21 +72,53 @@ namespace StarterAssets.Player.Movement
             _playerCamera.InitializeCamera();
 
             _playerAnimator = GetComponent<PlayerAnimation>();
-            _controller = GetComponent<CharacterController>();
-            _input = GetComponent<StarterAssetsInputs>();
             _playerAnimator.AssignAnimationIDs();
+            _input = GetComponent<StarterAssetsInputs>();
 #if ENABLE_INPUT_SYSTEM 
-            _playerInput = GetComponent<PlayerInput>();
+            
+            _controller = GetComponent<CharacterController>();
             
 #else       
 			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
 #endif      
             _playerMovementBase = GetComponent<PlayerMovementBaseClass>();
             _playerMovementBase.InitMovement(PlayerComponents);
+
+           InitSinglePlayer();
+           InitMultiplayer();
         }
+
+
+        private void InitSinglePlayer()
+        {
+            if (_playerControllerType == PlayerControllerType.Multi) return;
+            _playerInput = GetComponent<PlayerInput>();
+        }
+
+        private void InitMultiplayer()
+        {
+            if (_playerControllerType == PlayerControllerType.Single) return;
+            _networkBehavriour = GetComponent<NetworkBehaviour>();
+            
+            if (_playerControllerType == PlayerControllerType.Multi && _networkBehavriour == null) return;
+
+            if (_virtualCamera == null)
+            {
+                _virtualCamera = FindFirstObjectByType<CinemachineVirtualCamera>();
+            }
+
+            if (_networkBehavriour.IsClient && _networkBehavriour.IsOwner)
+            {
+                _playerInput = GetComponent<PlayerInput>();
+                _playerInput.enabled = true;
+                _virtualCamera.Follow = transform.GetChild(0);
+            }
+        }
+
 
         private void Update()
         {
+            if (_playerControllerType == PlayerControllerType.Multi && !_networkBehavriour.IsOwner) return;
             _playerAnimator.GetAnimatorComponent();
             _playerMovementBase.JumpAndGravity(PlayerComponents, _input, _playerAnimator);
             _playerMovementBase.GroundedCheck(PlayerComponents, _playerAnimator);
