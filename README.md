@@ -1,6 +1,7 @@
+![image](https://github.com/user-attachments/assets/c405d7e2-5918-45c5-8217-006e6c539016)
+
 # Interview Tech Demo
 Small educational demo, made in 4 days.
-![image](https://github.com/user-attachments/assets/c405d7e2-5918-45c5-8217-006e6c539016)
 
 ## How to Use
 Use WASD and mouse to move the character, go near spheres to learn about SOLID prinicpals, move away from them to exit. Available in both single and multiplayer.
