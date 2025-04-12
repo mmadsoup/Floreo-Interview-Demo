@@ -6,8 +6,6 @@ namespace StarterAssets.Interactive
 {
     public class InteractableInstantiator : MonoBehaviour
     {
-        [SerializeField]
-        private AddressableInstantiator _addressableInstantiator;
         private GameObject[] _interactableGameObjects;
         private List<Interactable> _interactables = new();
         void Awake()
@@ -31,8 +29,8 @@ namespace StarterAssets.Interactive
             {
                 if (obj != null)
                 {
-                    obj.OnInteracted += _addressableInstantiator.LoadSceneAdditive;
-                    obj.OnUninteracted += _addressableInstantiator.UnloadSceneAdditive;
+                    obj.OnInteracted += AddressableInstantiator.Instance.LoadSceneAdditive;
+                    obj.OnUninteracted += AddressableInstantiator.Instance.UnloadSceneAdditive;
                 }
             }
         }
@@ -43,8 +41,8 @@ namespace StarterAssets.Interactive
             {
                 if (obj != null)
                 {
-                    obj.OnInteracted -= _addressableInstantiator.LoadSceneAdditive;
-                    obj.OnUninteracted -= _addressableInstantiator.UnloadSceneAdditive;
+                    obj.OnInteracted -= AddressableInstantiator.Instance.LoadSceneAdditive;
+                    obj.OnUninteracted -= AddressableInstantiator.Instance.UnloadSceneAdditive;
                 }
             }
         }
