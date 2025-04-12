@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using StarterAssets.Player.Animation;
 using StarterAssets.Player.Audio;
 using UnityEngine;

@@ -1,0 +1,13 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/main_menu.uss?fileID=7433441132597879392&amp;guid=8b474eaecd719da4589791ea79590c1b&amp;type=3#main_menu" />
+    <ui:VisualElement name="Panel" class="panel" style="flex-grow: 1;">
+        <ui:VisualElement name="Text-Container" style="flex-grow: 1; align-items: flex-start; justify-content: flex-end; flex-direction: column; font-size: 40px; align-self: center;">
+            <ui:Label text="Floreo Interview Demo" name="TitleText" class="menu-text" />
+            <ui:Label text="By Herleen Dualan" name="SubtitleText" class="menu-text" style="font-size: 20px; -unity-text-align: upper-center;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Button-Container" class="menu" style="flex-grow: 1; justify-content: center; align-items: center; align-content: auto; flex-direction: row; flex-wrap: nowrap; flex-basis: auto; align-self: center; top: auto;">
+            <ui:Button text="Button" name="ButtonOne" class="button-text" style="width: 180%;" />
+            <ui:Button text="Button" name="ButtonTwo" style="width: 180%;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -235,7 +235,11 @@ GameObject:
   - component: {fileID: 4433952196609318516}
   - component: {fileID: 6336547183789495014}
   - component: {fileID: 2429684584995051197}
+  - component: {fileID: 4009893214942796143}
   - component: {fileID: 7248658471537854318}
+  - component: {fileID: 7641498580121411575}
+  - component: {fileID: 6184087691021306573}
+  - component: {fileID: 5546402245305189724}
   m_Layer: 8
   m_Name: PlayerArmature_Extended
   m_TagString: Player
@@ -251,7 +255,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 742541298234618320}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -442,6 +446,18 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &4009893214942796143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 742541298234618320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f66f462d9b2415439db8a317469e060, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7248658471537854318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -454,32 +470,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b63922a51dd8634397808add64941fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 2
-  SprintSpeed: 5.335
-  RotationSmoothTime: 0.12
-  SpeedChangeRate: 10
-  LandingAudioClip: {fileID: 8300000, guid: ff697d3070687ce4583faa0561a145a2, type: 3}
-  FootstepAudioClips:
-  - {fileID: 8300000, guid: 72f526a6a9890f643a88e85a61c86c8a, type: 3}
-  - {fileID: 8300000, guid: 85016e0f2b01da248b9663dd49a161b0, type: 3}
-  - {fileID: 8300000, guid: 186de84b3207156479abe98f4958fed0, type: 3}
-  - {fileID: 8300000, guid: 1a91fcd19acf1e54bba0945d9f390849, type: 3}
-  FootstepAudioVolume: 0.5
-  JumpHeight: 1.2
-  Gravity: -15
-  JumpTimeout: 0.5
-  FallTimeout: 0.15
-  Grounded: 1
-  GroundedOffset: -0.14
-  GroundedRadius: 0.28
-  GroundLayers:
-    serializedVersion: 2
-    m_Bits: 1
+  PlayerComponents: {fileID: 11400000, guid: 79fe0c7209738ad46b683b47706d608d, type: 2}
+  _playerControllerType: {fileID: 11400000, guid: 668ed99e122cee6498b05e840c8ac34b, type: 2}
+--- !u!114 &7641498580121411575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 742541298234618320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acaf3a06576125445aa2eba42bc9fa09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerAudio: {fileID: 11400000, guid: b042839e2884c2148a2da62ad0d1e29f, type: 2}
+--- !u!114 &6184087691021306573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 742541298234618320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2047d32a2a4f53489bc2e646de721e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5546402245305189724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 742541298234618320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc84e41b9fb25b348ba63960cc80fa6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   CinemachineCameraTarget: {fileID: 1171034973618871313}
-  TopClamp: 70
-  BottomClamp: -30
-  CameraAngleOverride: 0
-  LockCameraPosition: 0
 --- !u!1 &944507624585689682
 GameObject:
   m_ObjectHideFlags: 0

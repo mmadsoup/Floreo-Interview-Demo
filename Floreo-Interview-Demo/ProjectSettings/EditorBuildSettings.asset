@@ -6,8 +6,30 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Scenes/Playground_Main.unity
+    guid: b80cd56fbb2508742baf72c10e07cca3
+  - enabled: 1
+    path: Assets/Scenes/Playground_Single.unity
+    guid: 3ac7eab8cdffc284a94a3718d3bf4b31
+  - enabled: 1
+    path: Assets/Scenes/Playground_Multi_Host.unity
+    guid: 8700d716c0660c346a9299ac489d1834
+  - enabled: 1
+    path: Assets/Scenes/Playground_Multi_Client.unity
+    guid: 750f70e6e50e63c46b0cac48f6199786
+  - enabled: 1
+    path: Assets/Third Party/UnityTechnologies/LevelUpYourCode/_DesignPatterns/2_ObjectPool/ObjectPool.unity
+    guid: 7baa01a4cf8e9479e9945f8599f293c8
+  - enabled: 1
+    path: Assets/Third Party/UnityTechnologies/LevelUpYourCode/_DesignPatterns/6_Observer/Observer.unity
+    guid: 580ec8a35c5134f67a7117b713c17130
+  - enabled: 1
+    path: Assets/Third Party/UnityTechnologies/LevelUpYourCode/_SOLID/4_InterfaceSegregation/InterfaceSegregation.unity
+    guid: 429e376c2360e144e8bdf8145997e56d
+  - enabled: 1
+    path: Assets/Third Party/UnityTechnologies/LevelUpYourCode/_SOLID/5_DependencyInversion/DependencyInversion.unity
+    guid: 253506c4f2e77344c83663c20536527b
   m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: c8bdb5a6835389448b4566e20e7abebc, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
