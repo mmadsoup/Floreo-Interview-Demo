@@ -141,7 +141,7 @@ namespace StarterAssets.Player.Movement
 
         private void LateUpdate()
         {
-            _playerCamera.RotateCamera(_input.look, IsCurrentDeviceMouse);
+            _playerCamera.RotateCamera(_input.look);
         }
 
         

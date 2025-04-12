@@ -2256,8 +2256,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b63922a51dd8634397808add64941fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerComponents: {fileID: 11400000, guid: 79fe0c7209738ad46b683b47706d608d, type: 2}
-  _playerControllerType: 1
+  MoveSpeed: 2
+  SprintSpeed: 5.335
+  RotationSmoothTime: 0.12
+  SpeedChangeRate: 10
+  JumpHeight: 1.2
+  Gravity: -15
+  JumpTimeout: 0.5
+  FallTimeout: 0.15
+  Grounded: 1
+  GroundedOffset: -0.14
+  GroundedRadius: 0.28
+  GroundLayers:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!1 &7200750062316781965
 GameObject:
   m_ObjectHideFlags: 0
