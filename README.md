@@ -1,5 +1,5 @@
 # Interview Tech Demo
-Small educational demo, made in 4 days.
+Small educational demo.
 
 ## How to Use
 Use WASD and mouse to move the character, go near spheres to learn about SOLID prinicpals, move away from them to exit. Available in both single and multiplayer.
