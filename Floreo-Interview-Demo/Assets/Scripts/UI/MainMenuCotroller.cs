@@ -1,7 +1,8 @@
 using System;
+using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using Unity.Netcode;
 
 namespace StarterAssets.Menu
 {
@@ -12,8 +13,10 @@ namespace StarterAssets.Menu
         private Button _buttonTwo;
         private TextElement _titleText;
         private TextElement _subtitleText;
-        private enum MenuState { DefaultMenu, Multiplayer}
-        private MenuState state = MenuState.DefaultMenu;
+        private enum MenuState { DefaultMenu, Multiplayer }
+        private Dictionary<MenuState, Action> _buttonOneEventHandlers = new();
+        private Dictionary<MenuState, Action> _buttonTwoEventHandlers = new();
+        private MenuState _state = MenuState.DefaultMenu;
 
         public event Action OnSinglePlayerButtonClicked;
         public event Action OnHostButtonClicked;
@@ -24,6 +27,35 @@ namespace StarterAssets.Menu
             _ui = GetComponent<UIDocument>().rootVisualElement;
             _titleText = _ui.Q<TextElement>("TitleText");
             _subtitleText = _ui.Q<TextElement>("SubtitleText");
+
+            _buttonOneEventHandlers = new()
+            {
+                { MenuState.DefaultMenu, () => 
+                {
+                    OnSinglePlayerButtonClicked?.Invoke();
+                    UnloadMenu();
+                }},
+                { MenuState.Multiplayer, () => 
+                {
+                    OnHostButtonClicked?.Invoke();
+                    UnloadMenu();
+                }}
+            };
+
+            _buttonTwoEventHandlers = new()
+            {
+                { MenuState.DefaultMenu, () => 
+                {
+                    _state = MenuState.Multiplayer;
+                    _buttonTwo.text = "Join";
+                    _buttonOne.text = "Host";
+                }},
+                { MenuState.Multiplayer, () =>
+                {
+                    OnJoinButtonClicked?.Invoke();
+                    UnloadMenu();
+                }}
+            };
         }
 
         void OnEnable()
@@ -47,6 +79,7 @@ namespace StarterAssets.Menu
         {
             ButtonOneStateHandler();
         }
+
         
         private void OnMultiplayerClicked()
         {
@@ -55,33 +88,17 @@ namespace StarterAssets.Menu
 
         private void ButtonOneStateHandler()
         {
-            switch (state)
-            { 
-                case MenuState.DefaultMenu:
-                    OnSinglePlayerButtonClicked?.Invoke();
-                    UnloadMenu();
-                break;
-                case MenuState.Multiplayer:
-                    OnHostButtonClicked?.Invoke();
-                    UnloadMenu();
-                break;
+            if (_buttonOneEventHandlers.TryGetValue(_state, out var action))
+            {
+                action.Invoke();
             }
         }
 
         private void ButtonTwoStateHandler()
         {
-            switch (state)
-            { 
-                case MenuState.DefaultMenu:
-                    Debug.Log("Multi Player");
-                    state = MenuState.Multiplayer;
-                    _buttonTwo.text = "Join";
-                    _buttonOne.text = "Host";
-                break;
-                case MenuState.Multiplayer:
-                    OnJoinButtonClicked?.Invoke();
-                    UnloadMenu();
-                break;
+            if (_buttonTwoEventHandlers.TryGetValue(_state, out var action))
+            {
+                action.Invoke();
             }
         }
 

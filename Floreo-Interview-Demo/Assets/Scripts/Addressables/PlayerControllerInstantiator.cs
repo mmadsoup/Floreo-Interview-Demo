@@ -1,7 +1,5 @@
 using UnityEngine;
 using StarterAssets.Menu;
-using System.Collections.Generic;
-using System;
 
 namespace StarterAssets.AdrressableObjects {
     public class PlayerControllerInstantiator : MonoBehaviour
