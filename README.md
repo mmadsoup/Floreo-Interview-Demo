@@ -9,15 +9,16 @@ Use WASD and mouse to move the character, go near spheres to learn about SOLID p
 - [Unity Design Patterns](https://assetstore.unity.com/packages/essentials/tutorial-projects/level-up-your-code-with-design-patterns-and-solid-289616?srsltid=AfmBOoo1yzzEJk81iBWJnT2g8zU0QgPfhlVvohvhjxRWq8Mas6FF4ETF)
 
 ## Quick Jump - Scripts
-[Refactored Player Scripts](https://github.com/mmadsoup/Floreo-Interview-Demo/tree/main/Floreo-Interview-Demo/Assets/Scripts/Player)
-[OG Third Person Controller](https://github.com/mmadsoup/Floreo-Interview-Demo/blob/main/Floreo-Interview-Demo/Assets/StarterAssets/ThirdPersonController/Scripts/ThirdPersonController.cs)
+### Player:
+- [Refactored Player Scripts](https://github.com/mmadsoup/Floreo-Interview-Demo/tree/main/Floreo-Interview-Demo/Assets/Scripts/Player)
+- [OG Third Person Controller](https://github.com/mmadsoup/Floreo-Interview-Demo/blob/main/Floreo-Interview-Demo/Assets/StarterAssets/ThirdPersonController/Scripts/ThirdPersonController.cs)
 
-[Main Menu Controller](https://github.com/mmadsoup/Floreo-Interview-Demo/blob/main/Floreo-Interview-Demo/Assets/Scripts/UI/MainMenuCotroller.cs)
-[Interact Script](https://github.com/mmadsoup/Floreo-Interview-Demo/blob/main/Floreo-Interview-Demo/Assets/Scripts/Interactables/Interactable.cs)
-
-[Addressable Instantiator](https://github.com/mmadsoup/Floreo-Interview-Demo/blob/main/Floreo-Interview-Demo/Assets/Scripts/Addressables/AddressableInstantiator.cs)
-[Player Controller Instantiator](https://github.com/mmadsoup/Floreo-Interview-Demo/blob/main/Floreo-Interview-Demo/Assets/Scripts/Addressables/PlayerControllerInstantiator.cs)
-[Interactable Instantiator](https://github.com/mmadsoup/Floreo-Interview-Demo/blob/main/Floreo-Interview-Demo/Assets/Scripts/Interactables/InteractableInstantiator.cs)
+### Other:
+- [Main Menu Controller](https://github.com/mmadsoup/Floreo-Interview-Demo/blob/main/Floreo-Interview-Demo/Assets/Scripts/UI/MainMenuCotroller.cs)
+- [Interact Script](https://github.com/mmadsoup/Floreo-Interview-Demo/blob/main/Floreo-Interview-Demo/Assets/Scripts/Interactables/Interactable.cs)
+- [Addressable Instantiator](https://github.com/mmadsoup/Floreo-Interview-Demo/blob/main/Floreo-Interview-Demo/Assets/Scripts/Addressables/AddressableInstantiator.cs)
+- [Player Controller Instantiator](https://github.com/mmadsoup/Floreo-Interview-Demo/blob/main/Floreo-Interview-Demo/Assets/Scripts/Addressables/PlayerControllerInstantiator.cs)
+- [Interactable Instantiator](https://github.com/mmadsoup/Floreo-Interview-Demo/blob/main/Floreo-Interview-Demo/Assets/Scripts/Interactables/InteractableInstantiator.cs)
 
 ## Technologies used
 - Loading scenes asynchronously using addressables
