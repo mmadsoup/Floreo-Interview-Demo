@@ -23,8 +23,6 @@ Use WASD and mouse to move the character, go near spheres to learn about SOLID p
 - [Camera](https://github.com/mmadsoup/Floreo-Interview-Demo/blob/main/Floreo-Interview-Demo/Assets/Scripts/Player/Camera/PlayerCamera.cs)
 - [Audio](https://github.com/mmadsoup/Floreo-Interview-Demo/blob/main/Floreo-Interview-Demo/Assets/Scripts/Player/Audio/PlayerAudio.cs)
 - [Animation](https://github.com/mmadsoup/Floreo-Interview-Demo/blob/main/Floreo-Interview-Demo/Assets/Scripts/Player/Animation/PlayerAnimation.cs)
-- [Animation Base Class](https://github.com/mmadsoup/Floreo-Interview-Demo/blob/main/Floreo-Interview-Demo/Assets/Scripts/Player/BaseClasses/PlayerAnimatorBaseClass.cs)
-- [Movement Base Class](https://github.com/mmadsoup/Floreo-Interview-Demo/blob/main/Floreo-Interview-Demo/Assets/Scripts/Player/BaseClasses/PlayerMovementBaseClass.cs)
 
 ## Technologies used
 - Loading scenes asynchronously using addressables
