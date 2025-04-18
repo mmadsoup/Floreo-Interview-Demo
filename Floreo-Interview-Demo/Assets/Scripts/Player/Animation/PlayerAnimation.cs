@@ -16,7 +16,7 @@ namespace StarterAssets.Player.Animation
         private float _animationBlend;
         public float AnimationBlend {get; set;}
 
-        void Start()
+        void Awake()
         {
             GetAnimatorComponent();
             playerMovement = GetComponent<PlayerMovement>();

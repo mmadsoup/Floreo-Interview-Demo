@@ -104,16 +104,15 @@ namespace StarterAssets.Player.Movement
 
         private void Awake()
         {
+            Cursor.visible = false;
+
             // get a reference to our main camera
             if (_mainCamera == null)
             {
                 _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
             }
-        }
 
-        private void Start()
-        {
-            _playerCamera = GetComponent<PlayerCamera>();
+             _playerCamera = GetComponent<PlayerCamera>();
             _playerCamera.InitializeCamera();
 
             _playerAnimator = GetComponent<PlayerAnimation>();

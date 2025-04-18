@@ -37,7 +37,6 @@ namespace StarterAssets.Player.Camera
 
                     _cinemachineTargetYaw += input.x * deltaTimeMultiplier;
                     _cinemachineTargetPitch += input.y * deltaTimeMultiplier;
-                    
                 }
 
                 _cinemachineTargetYaw = Utils.ClampAngle(_cinemachineTargetYaw, float.MinValue, float.MaxValue);

@@ -61,7 +61,6 @@ namespace StarterAssets.Player.Animation
             if (!_hasAnimator) return;
             _animator.SetBool(_animIDFreeFall, true);
        }
-   
     }
 }
 

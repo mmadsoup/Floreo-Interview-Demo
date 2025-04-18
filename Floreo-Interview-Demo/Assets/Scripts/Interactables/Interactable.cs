@@ -25,16 +25,19 @@ namespace StarterAssets.Interactive
         public void Uninteract()
         {
             OnUninteracted?.Invoke(_addressablePath);
-            _spawned = false;
-            Cursor.visible = false;
+            ToggleInteractable();
         }
 
         public void Interact()
         {
              OnInteracted?.Invoke(_addressablePath);
-             _spawned = true;
-            Cursor.visible = true;
+             ToggleInteractable();
         }
         
+        private void ToggleInteractable()
+        {
+            _spawned = !_spawned;
+            Cursor.visible = !Cursor.visible;
+        }
     }
 }
