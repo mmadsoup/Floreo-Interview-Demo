@@ -11,10 +11,11 @@ Use WASD and mouse to move the character, go near spheres to learn about SOLID p
 ## Quick Jump - Scripts
 ### My Scripts:
 - [Main Menu Controller](https://github.com/mmadsoup/Floreo-Interview-Demo/blob/main/Floreo-Interview-Demo/Assets/Scripts/UI/MainMenuCotroller.cs)
-- [Interact Script](https://github.com/mmadsoup/Floreo-Interview-Demo/blob/main/Floreo-Interview-Demo/Assets/Scripts/Interactables/Interactable.cs)
 - [Addressable Instantiator](https://github.com/mmadsoup/Floreo-Interview-Demo/blob/main/Floreo-Interview-Demo/Assets/Scripts/Addressables/AddressableInstantiator.cs)
-- [Player Controller Instantiator](https://github.com/mmadsoup/Floreo-Interview-Demo/blob/main/Floreo-Interview-Demo/Assets/Scripts/Addressables/PlayerControllerInstantiator.cs)
+- [Interact Script](https://github.com/mmadsoup/Floreo-Interview-Demo/blob/main/Floreo-Interview-Demo/Assets/Scripts/Interactables/Interactable.cs)
 - [Interactable Instantiator](https://github.com/mmadsoup/Floreo-Interview-Demo/blob/main/Floreo-Interview-Demo/Assets/Scripts/Interactables/InteractableInstantiator.cs)
+- [Player Controller Instantiator](https://github.com/mmadsoup/Floreo-Interview-Demo/blob/main/Floreo-Interview-Demo/Assets/Scripts/Addressables/PlayerControllerInstantiator.cs)
+
 
 ### Player:
 #### Separated into single responsibility scripts
