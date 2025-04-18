@@ -1,5 +1,5 @@
 # Interview Tech Demo
-Small educational demo.
+Small educational demo where I experimented with unfamiliar technologies such as addressables, networking and loading scenes into a hierarchy asynchronously.
 
 ## How to Use
 Use WASD and mouse to move the character, go near spheres to learn about SOLID prinicpals, move away from them to exit. Available in both single and multiplayer.
@@ -9,16 +9,17 @@ Use WASD and mouse to move the character, go near spheres to learn about SOLID p
 - [Unity Design Patterns](https://assetstore.unity.com/packages/essentials/tutorial-projects/level-up-your-code-with-design-patterns-and-solid-289616?srsltid=AfmBOoo1yzzEJk81iBWJnT2g8zU0QgPfhlVvohvhjxRWq8Mas6FF4ETF)
 
 ## Quick Jump - Scripts
-### Player:
-- [Refactored Player Scripts](https://github.com/mmadsoup/Floreo-Interview-Demo/tree/main/Floreo-Interview-Demo/Assets/Scripts/Player)
-- [OG Third Person Controller](https://github.com/mmadsoup/Floreo-Interview-Demo/blob/main/Floreo-Interview-Demo/Assets/StarterAssets/ThirdPersonController/Scripts/ThirdPersonController.cs)
-
-### Other:
+### My Scripts:
 - [Main Menu Controller](https://github.com/mmadsoup/Floreo-Interview-Demo/blob/main/Floreo-Interview-Demo/Assets/Scripts/UI/MainMenuCotroller.cs)
 - [Interact Script](https://github.com/mmadsoup/Floreo-Interview-Demo/blob/main/Floreo-Interview-Demo/Assets/Scripts/Interactables/Interactable.cs)
 - [Addressable Instantiator](https://github.com/mmadsoup/Floreo-Interview-Demo/blob/main/Floreo-Interview-Demo/Assets/Scripts/Addressables/AddressableInstantiator.cs)
 - [Player Controller Instantiator](https://github.com/mmadsoup/Floreo-Interview-Demo/blob/main/Floreo-Interview-Demo/Assets/Scripts/Addressables/PlayerControllerInstantiator.cs)
 - [Interactable Instantiator](https://github.com/mmadsoup/Floreo-Interview-Demo/blob/main/Floreo-Interview-Demo/Assets/Scripts/Interactables/InteractableInstantiator.cs)
+
+### Player:
+#### Separated into single responsibility scripts
+- [Refactored Player Scripts](https://github.com/mmadsoup/Floreo-Interview-Demo/tree/main/Floreo-Interview-Demo/Assets/Scripts/Player)
+- [OG Third Person Controller](https://github.com/mmadsoup/Floreo-Interview-Demo/blob/main/Floreo-Interview-Demo/Assets/StarterAssets/ThirdPersonController/Scripts/ThirdPersonController.cs)
 
 ## Technologies used
 - Loading scenes asynchronously using addressables
