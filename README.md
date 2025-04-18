@@ -38,4 +38,5 @@ Use WASD and mouse to move the character, go near spheres to learn about SOLID p
 - Flyweight pattern
 - Interface implementation
 - Interactables
+
 ![image](https://github.com/user-attachments/assets/c405d7e2-5918-45c5-8217-006e6c539016)
