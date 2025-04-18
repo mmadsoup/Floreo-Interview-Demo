@@ -1,5 +1,5 @@
 # Interview Tech Demo
-Small educational demo where I experimented with unfamiliar technologies such as addressables, networking and loading scenes into a hierarchy asynchronously.
+Small educational demo where I experimented with unfamiliar technologies such as async scene loading with addressables, networking via netcode and UI toolkit.
 
 ## How to Use
 Use WASD and mouse to move the character, go near spheres to learn about SOLID prinicpals, move away from them to exit. Available in both single and multiplayer.
@@ -25,12 +25,12 @@ Use WASD and mouse to move the character, go near spheres to learn about SOLID p
 - [Animation](https://github.com/mmadsoup/Floreo-Interview-Demo/blob/main/Floreo-Interview-Demo/Assets/Scripts/Player/Animation/PlayerAnimation.cs)
 
 ## Technologies used
-- Loading scenes asynchronously using addressables
+- Async Scene Loading w/ Addressables
 - Netcode
 - UI Toolkit
 
 ## Additional features
-- Refactored monolith 3rd person controller class
+- Refactored original 3rd person controller class
 - Observer pattern
 - Singleton pattern
 - Flyweight pattern
