@@ -240,6 +240,8 @@ GameObject:
   - component: {fileID: 7641498580121411575}
   - component: {fileID: 6184087691021306573}
   - component: {fileID: 5546402245305189724}
+  - component: {fileID: 5432456604937878379}
+  - component: {fileID: 756361229109676000}
   m_Layer: 8
   m_Name: PlayerArmature_Extended
   m_TagString: Player
@@ -522,6 +524,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CinemachineCameraTarget: {fileID: 1171034973618871313}
+--- !u!114 &5432456604937878379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 742541298234618320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea4f9f5c5d26c184a8756e3e4abbf20e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!135 &756361229109676000
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 742541298234618320}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.05
+  m_Center: {x: 0.48, y: 0.89, z: 0}
 --- !u!1 &944507624585689682
 GameObject:
   m_ObjectHideFlags: 0
